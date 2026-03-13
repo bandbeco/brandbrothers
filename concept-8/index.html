@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brand Brothers — Custom Branded Packaging</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Tenor+Sans&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --gold: #C9A84C;
+  --gold-light: #E8D48B;
+  --gold-dark: #A07C1C;
+  --ivory: #FDFAF3;
+  --cream: #F9F3E3;
+  --white: #FFFFFF;
+  --black: #1A1A1A;
+  --black-soft: #2C2C2C;
+  --gray: #8A8A8A;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Quicksand', sans-serif;
+  background: var(--ivory);
+  color: var(--black);
+  overflow-x: hidden;
+  line-height: 1.7;
+  font-weight: 400;
+}
+
+/* ── Typography ── */
+h1, h2, h3, h4 { font-family: 'Tenor Sans', serif; font-weight: 400; letter-spacing: 0.04em; }
+.script { font-family: 'Great Vibes', cursive; }
+
+/* ── Utility ── */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.gold-text { color: var(--gold); }
+.text-center { text-align: center; }
+
+/* ── Reveal on scroll ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.15s; }
+.reveal-delay-2 { transition-delay: 0.3s; }
+.reveal-delay-3 { transition-delay: 0.45s; }
+
+/* ── Art Deco Decorative Elements ── */
+.deco-line {
+  width: 80px;
+  height: 1px;
+  background: var(--gold);
+  display: inline-block;
+  vertical-align: middle;
+}
+.deco-diamond {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--gold);
+  transform: rotate(45deg);
+  margin: 0 16px;
+  vertical-align: middle;
+}
+.deco-divider {
+  text-align: center;
+  margin: 48px auto;
+}
+
+/* ── Fan / Sunburst motif (CSS only) ── */
+.fan-motif {
+  position: relative;
+  width: 120px;
+  height: 60px;
+  margin: 0 auto 32px;
+  overflow: hidden;
+}
+.fan-motif::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: repeating-conic-gradient(
+    from 0deg,
+    transparent 0deg 8deg,
+    var(--gold) 8deg 9deg,
+    transparent 9deg 18deg
+  );
+  opacity: 0.25;
+}
+
+/* ── Sparkle / Confetti Animations ── */
+@keyframes float-up {
+  0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+  100% { transform: translateY(-100vh) rotate(720deg) scale(0); opacity: 0; }
+}
+@keyframes shimmer {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-60vh) translateX(30px) rotate(360deg); opacity: 0; }
+}
+
+.sparkle-field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+.sparkle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--gold-light);
+  border-radius: 50%;
+  animation: shimmer 2s ease-in-out infinite;
+}
+.confetti {
+  position: absolute;
+  bottom: -10px;
+  width: 6px;
+  height: 10px;
+  border-radius: 1px;
+  animation: drift 8s ease-in infinite;
+}
+
+/* ══════════════════════════════════════
+   HERO
+   ══════════════════════════════════════ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: linear-gradient(175deg, var(--black) 0%, #0D0D0D 50%, #1A1510 100%);
+  color: var(--white);
+  overflow: hidden;
+}
+
+/* Geometric border overlay */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 20px;
+  border: 1px solid rgba(201, 168, 76, 0.2);
+  pointer-events: none;
+  z-index: 2;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 30px;
+  border: 1px solid rgba(201, 168, 76, 0.08);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Corner ornaments */
+.corner-ornament {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  z-index: 3;
+  pointer-events: none;
+}
+.corner-ornament::before,
+.corner-ornament::after {
+  content: '';
+  position: absolute;
+  background: var(--gold);
+}
+.corner-ornament--tl { top: 20px; left: 20px; }
+.corner-ornament--tl::before { top: 0; left: 0; width: 30px; height: 1px; }
+.corner-ornament--tl::after { top: 0; left: 0; width: 1px; height: 30px; }
+.corner-ornament--tr { top: 20px; right: 20px; }
+.corner-ornament--tr::before { top: 0; right: 0; width: 30px; height: 1px; }
+.corner-ornament--tr::after { top: 0; right: 0; width: 1px; height: 30px; }
+.corner-ornament--bl { bottom: 20px; left: 20px; }
+.corner-ornament--bl::before { bottom: 0; left: 0; width: 30px; height: 1px; }
+.corner-ornament--bl::after { bottom: 0; left: 0; width: 1px; height: 30px; }
+.corner-ornament--br { bottom: 20px; right: 20px; }
+.corner-ornament--br::before { bottom: 0; right: 0; width: 30px; height: 1px; }
+.corner-ornament--br::after { bottom: 0; right: 0; width: 1px; height: 30px; }
+
+/* Sunburst behind hero content */
+.hero-sunburst {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 900px;
+  height: 900px;
+  border-radius: 50%;
+  background: repeating-conic-gradient(
+    from 0deg,
+    transparent 0deg 4.5deg,
+    rgba(201, 168, 76, 0.03) 4.5deg 5deg,
+    transparent 5deg 10deg
+  );
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 4;
+  padding: 40px 24px;
+}
+.hero-pretitle {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+.hero-brand {
+  font-family: 'Tenor Sans', serif;
+  font-size: clamp(42px, 7vw, 80px);
+  letter-spacing: 0.08em;
+  line-height: 1.1;
+  margin-bottom: 8px;
+  color: var(--white);
+}
+.hero-tagline {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(28px, 4vw, 48px);
+  color: var(--gold-light);
+  margin-bottom: 32px;
+  line-height: 1.3;
+}
+.hero-subtitle {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.7);
+  max-width: 500px;
+  margin: 0 auto 40px;
+  line-height: 1.8;
+}
+
+/* Skyline SVG */
+.skyline-wrap {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+  opacity: 0.12;
+  pointer-events: none;
+}
+.skyline-wrap svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* CTA Buttons */
+.btn {
+  display: inline-block;
+  padding: 16px 48px;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+  z-index: -1;
+}
+.btn:hover::before { transform: scaleX(1); }
+.btn:hover { color: var(--black); }
+
+.btn--filled {
+  background: var(--gold);
+  color: var(--black);
+}
+.btn--filled::before { background: var(--gold-light); }
+.btn--filled:hover { color: var(--black); }
+
+.btn--white {
+  border-color: var(--white);
+  color: var(--white);
+}
+.btn--white::before { background: var(--white); }
+.btn--white:hover { color: var(--black); }
+
+/* ══════════════════════════════════════
+   NAVIGATION (minimal top bar)
+   ══════════════════════════════════════ */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.3s ease, padding 0.3s ease;
+}
+.nav.scrolled {
+  background: rgba(26, 26, 26, 0.95);
+  padding: 12px 40px;
+  backdrop-filter: blur(10px);
+}
+.nav-logo {
+  font-family: 'Tenor Sans', serif;
+  font-size: 18px;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  text-decoration: none;
+}
+.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links a {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--gold); }
+
+/* ══════════════════════════════════════
+   SECTION: HOW IT WORKS
+   ══════════════════════════════════════ */
+.section { padding: 120px 0; }
+.section--dark { background: var(--black); color: var(--white); }
+.section--cream { background: var(--cream); }
+
+.section-pretitle {
+  font-family: 'Great Vibes', cursive;
+  font-size: 28px;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.section-title {
+  font-family: 'Tenor Sans', serif;
+  font-size: clamp(28px, 4vw, 42px);
+  letter-spacing: 0.06em;
+  margin-bottom: 16px;
+}
+.section-subtitle {
+  font-size: 15px;
+  color: var(--gray);
+  max-width: 560px;
+  margin: 0 auto 64px;
+  font-weight: 300;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px;
+  position: relative;
+}
+/* Connecting line between steps */
+.steps-grid::before {
+  content: '';
+  position: absolute;
+  top: 50px;
+  left: 16.66%;
+  width: 66.66%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0.3;
+}
+.step {
+  text-align: center;
+  position: relative;
+}
+.step-number {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 28px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Octagonal border via clip-path */
+.step-number::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--gold);
+  clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+}
+.step-number span {
+  font-family: 'Tenor Sans', serif;
+  font-size: 32px;
+  color: var(--gold);
+}
+.step-icon {
+  font-size: 28px;
+  margin-bottom: 4px;
+  display: block;
+}
+.step h3 {
+  font-size: 18px;
+  margin-bottom: 12px;
+  letter-spacing: 0.06em;
+}
+.step p {
+  font-size: 14px;
+  color: var(--gray);
+  font-weight: 300;
+  max-width: 280px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+
+/* ══════════════════════════════════════
+   SECTION: PRODUCTS
+   ══════════════════════════════════════ */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+}
+.product-card {
+  background: var(--white);
+  border: 1px solid rgba(201, 168, 76, 0.15);
+  padding: 48px 24px 36px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 60px rgba(201, 168, 76, 0.1);
+}
+/* Deco corner accents on card */
+.product-card::before {
+  content: '';
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  border: 1px solid rgba(201, 168, 76, 0.08);
+  pointer-events: none;
+}
+.product-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.product-icon svg {
+  width: 56px;
+  height: 56px;
+  stroke: var(--gold);
+  fill: none;
+  stroke-width: 1.2;
+}
+.product-card h3 {
+  font-size: 16px;
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+.product-card p {
+  font-size: 13px;
+  color: var(--gray);
+  font-weight: 300;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+.product-link {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 4px;
+}
+.product-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--gold);
+  transition: width 0.3s ease;
+}
+.product-card:hover .product-link::after { width: 100%; }
+
+/* ══════════════════════════════════════
+   SECTION: TESTIMONIALS
+   ══════════════════════════════════════ */
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+.testimonial {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(201, 168, 76, 0.12);
+  padding: 48px 32px 40px;
+  position: relative;
+}
+.testimonial::before {
+  content: '\201C';
+  position: absolute;
+  top: 16px;
+  left: 24px;
+  font-family: 'Great Vibes', cursive;
+  font-size: 72px;
+  color: var(--gold);
+  opacity: 0.2;
+  line-height: 1;
+}
+.testimonial-text {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.9;
+  margin-bottom: 24px;
+  color: rgba(255,255,255,0.8);
+  font-style: italic;
+}
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.testimonial-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Tenor Sans', serif;
+  font-size: 16px;
+  color: var(--black);
+}
+.testimonial-name {
+  font-family: 'Tenor Sans', serif;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+}
+.testimonial-role {
+  font-size: 11px;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+.stars {
+  color: var(--gold);
+  font-size: 12px;
+  letter-spacing: 4px;
+  margin-bottom: 20px;
+}
+
+/* ══════════════════════════════════════
+   CTA BANNER
+   ══════════════════════════════════════ */
+.cta-section {
+  padding: 120px 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(201, 168, 76, 0.04) 0%, transparent 50%),
+    linear-gradient(225deg, rgba(201, 168, 76, 0.04) 0%, transparent 50%),
+    var(--ivory);
+}
+.cta-section .section-title { margin-bottom: 16px; }
+.cta-section .section-subtitle { margin-bottom: 48px; }
+.cta-border {
+  position: absolute;
+  inset: 32px;
+  border: 1px solid rgba(201, 168, 76, 0.12);
+  pointer-events: none;
+}
+
+/* ══════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════ */
+.footer {
+  background: var(--black);
+  color: rgba(255,255,255,0.5);
+  padding: 60px 0 40px;
+  text-align: center;
+}
+.footer-brand {
+  font-family: 'Tenor Sans', serif;
+  font-size: 22px;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+.footer-tagline {
+  font-family: 'Great Vibes', cursive;
+  font-size: 20px;
+  color: var(--gold-light);
+  margin-bottom: 28px;
+}
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  list-style: none;
+  margin-bottom: 32px;
+}
+.footer-links a {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.footer-links a:hover { color: var(--gold); }
+.footer-divider {
+  width: 60px;
+  height: 1px;
+  background: rgba(201, 168, 76, 0.3);
+  margin: 0 auto 24px;
+}
+.footer-copy {
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+}
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════ */
+@media (max-width: 968px) {
+  .products-grid { grid-template-columns: repeat(2, 1fr); }
+  .testimonials-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
+  .nav-links { display: none; }
+}
+@media (max-width: 640px) {
+  .steps-grid { grid-template-columns: 1fr; gap: 56px; }
+  .steps-grid::before { display: none; }
+  .products-grid { grid-template-columns: 1fr; max-width: 360px; margin: 0 auto; }
+  .hero::before, .hero::after { inset: 10px; }
+  .corner-ornament--tl { top: 10px; left: 10px; }
+  .corner-ornament--tr { top: 10px; right: 10px; }
+  .corner-ornament--bl { bottom: 10px; left: 10px; }
+  .corner-ornament--br { bottom: 10px; right: 10px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAVIGATION ═══ -->
+<nav class="nav" id="nav">
+  <a href="#" class="nav-logo">BRAND BROTHERS</a>
+  <ul class="nav-links">
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#testimonials">Testimonials</a></li>
+    <li><a href="#cta">Get Started</a></li>
+  </ul>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero" id="hero">
+  <div class="corner-ornament corner-ornament--tl"></div>
+  <div class="corner-ornament corner-ornament--tr"></div>
+  <div class="corner-ornament corner-ornament--bl"></div>
+  <div class="corner-ornament corner-ornament--br"></div>
+
+  <div class="hero-sunburst"></div>
+
+  <div class="sparkle-field" id="hero-sparkles"></div>
+
+  <div class="hero-content">
+    <p class="hero-pretitle">Custom Branded Packaging</p>
+    <h1 class="hero-brand">BRAND BROTHERS</h1>
+    <p class="hero-tagline">Make Every Package Unforgettable</p>
+    <p class="hero-subtitle">Premium custom-printed cups, bags, boxes and containers that turn your brand into a statement piece. Your logo, our craft.</p>
+    <a href="#products" class="btn btn--filled">Explore Products</a>
+  </div>
+
+  <!-- Manhattan Skyline SVG Silhouette -->
+  <div class="skyline-wrap">
+    <svg viewBox="0 0 1440 220" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#C9A84C" d="
+        M0,220 L0,180 L30,180 L30,160 L45,160 L45,140 L55,140 L55,120 L65,120 L65,100 L75,100 L75,90
+        L80,80 L85,90 L85,100 L95,100 L95,70 L105,70 L105,50 L110,35 L115,50 L115,70 L125,70 L125,90
+        L140,90 L140,110 L155,110 L155,95 L165,95 L165,75 L175,75 L175,60 L180,45 L185,60 L185,75
+        L195,75 L195,95 L210,95 L210,130 L230,130 L230,110 L245,110 L245,90 L255,90 L255,60
+        L260,40 L265,60 L265,90 L280,90 L280,120 L300,120 L300,140 L320,140 L320,110 L335,110
+        L335,85 L345,85 L345,55 L350,30 L355,55 L355,85 L370,85 L370,105 L390,105 L390,130
+        L410,130 L410,150 L440,150 L440,120 L455,120 L455,90 L465,90 L465,60 L475,60 L475,40
+        L480,20 L485,40 L485,60 L495,60 L495,85 L510,85 L510,110 L530,110 L530,140 L560,140
+        L560,160 L590,160 L590,130 L605,130 L605,100 L615,100 L615,75 L625,75 L625,55
+        L630,35 L635,55 L635,75 L650,75 L650,100 L665,100 L665,125 L690,125 L690,150
+        L720,150 L720,120 L740,120 L740,90 L750,90 L750,65 L760,65 L760,45 L765,25 L770,45
+        L770,65 L780,65 L780,90 L800,90 L800,115 L820,115 L820,140 L850,140 L850,160 L880,160
+        L880,135 L895,135 L895,105 L905,105 L905,80 L915,80 L915,55 L920,30 L925,55 L925,80
+        L935,80 L935,110 L955,110 L955,140 L980,140 L980,160 L1010,160 L1010,130 L1025,130
+        L1025,100 L1035,100 L1035,70 L1045,70 L1045,50 L1050,28 L1055,50 L1055,70 L1070,70
+        L1070,95 L1090,95 L1090,120 L1110,120 L1110,145 L1140,145 L1140,165 L1170,165
+        L1170,140 L1185,140 L1185,110 L1195,110 L1195,85 L1205,85 L1205,65 L1210,42
+        L1215,65 L1215,85 L1230,85 L1230,110 L1250,110 L1250,135 L1275,135 L1275,155
+        L1305,155 L1305,170 L1340,170 L1340,150 L1360,150 L1360,130 L1375,130 L1375,160
+        L1400,160 L1400,175 L1440,175 L1440,220 Z
+      "/>
+      <!-- Small window lights -->
+      <g fill="rgba(255,255,255,0.3)">
+        <rect x="108" y="45" width="3" height="3"/>
+        <rect x="348" y="40" width="3" height="3"/>
+        <rect x="478" y="28" width="3" height="3"/>
+        <rect x="628" y="42" width="3" height="3"/>
+        <rect x="763" y="32" width="3" height="3"/>
+        <rect x="918" y="38" width="3" height="3"/>
+        <rect x="1048" y="35" width="3" height="3"/>
+        <rect x="1208" y="50" width="3" height="3"/>
+        <rect x="256" y="70" width="2" height="2"/>
+        <rect x="466" y="68" width="2" height="2"/>
+        <rect x="616" y="82" width="2" height="2"/>
+        <rect x="751" y="72" width="2" height="2"/>
+        <rect x="906" y="88" width="2" height="2"/>
+        <rect x="1036" y="78" width="2" height="2"/>
+        <rect x="1196" y="92" width="2" height="2"/>
+      </g>
+    </svg>
+  </div>
+</section>
+
+<!-- ═══ HOW IT WORKS ═══ -->
+<section class="section" id="how-it-works">
+  <div class="container text-center">
+    <div class="fan-motif reveal"></div>
+    <p class="section-pretitle reveal">Simple & Elegant</p>
+    <h2 class="section-title reveal">How It Works</h2>
+    <p class="section-subtitle reveal">Three effortless steps from concept to custom-branded packaging delivered to your door.</p>
+
+    <div class="steps-grid">
+      <div class="step reveal reveal-delay-1">
+        <div class="step-number">
+          <span>01</span>
+        </div>
+        <h3>Upload Your Logo</h3>
+        <p>Share your brand artwork in any format. Our design team will prepare it for flawless printing at no extra charge.</p>
+      </div>
+      <div class="step reveal reveal-delay-2">
+        <div class="step-number">
+          <span>02</span>
+        </div>
+        <h3>Choose Your Products</h3>
+        <p>Select from our curated collection of cups, bags, boxes and containers. Pick sizes, styles and quantities to match your vision.</p>
+      </div>
+      <div class="step reveal reveal-delay-3">
+        <div class="step-number">
+          <span>03</span>
+        </div>
+        <h3>We Print &amp; Ship</h3>
+        <p>We produce your custom packaging with precision and care, then deliver it straight to your business. It's that simple.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Deco Divider ═══ -->
+<div class="deco-divider">
+  <span class="deco-line"></span>
+  <span class="deco-diamond"></span>
+  <span class="deco-line"></span>
+</div>
+
+<!-- ═══ PRODUCTS ═══ -->
+<section class="section section--cream" id="products">
+  <div class="container text-center">
+    <p class="section-pretitle reveal">Our Collection</p>
+    <h2 class="section-title reveal">Product Showcase</h2>
+    <p class="section-subtitle reveal">Premium packaging solutions, each one a canvas for your brand identity.</p>
+
+    <div class="products-grid">
+
+      <!-- Coffee Cups -->
+      <div class="product-card reveal reveal-delay-1">
+        <div class="product-icon">
+          <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 16 L14 56 L50 56 L48 16 Z"/>
+            <path d="M12 10 L52 10 L52 16 L12 16 Z"/>
+            <path d="M48 24 L56 24 C58 24 60 26 60 28 L60 36 C60 38 58 40 56 40 L49 40"/>
+            <line x1="24" y1="4" x2="24" y2="9" opacity="0.5"/>
+            <line x1="32" y1="2" x2="32" y2="9" opacity="0.5"/>
+            <line x1="40" y1="4" x2="40" y2="9" opacity="0.5"/>
+          </svg>
+        </div>
+        <h3>Coffee Cups</h3>
+        <p>Single and double wall cups in all standard sizes. Full-wrap printing for maximum brand impact with every sip.</p>
+        <a href="#" class="product-link">View Range</a>
+      </div>
+
+      <!-- Paper Bags -->
+      <div class="product-card reveal reveal-delay-2">
+        <div class="product-icon">
+          <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 20 L10 58 L54 58 L54 20"/>
+            <path d="M10 20 L16 8 L48 8 L54 20 Z"/>
+            <path d="M22 20 L22 8"/>
+            <path d="M42 20 L42 8"/>
+            <path d="M20 28 C20 34 26 36 32 36 C38 36 44 34 44 28" fill="none"/>
+          </svg>
+        </div>
+        <h3>Paper Bags</h3>
+        <p>From boutique carriers to takeaway bags. Kraft or white options with twisted or flat handles. Your brand, walking the streets.</p>
+        <a href="#" class="product-link">View Range</a>
+      </div>
+
+      <!-- Gift Boxes -->
+      <div class="product-card reveal reveal-delay-3">
+        <div class="product-icon">
+          <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 24 L8 56 L56 56 L56 24"/>
+            <path d="M4 16 L60 16 L60 24 L4 24 Z"/>
+            <line x1="32" y1="16" x2="32" y2="56"/>
+            <path d="M32 16 C32 16 24 8 20 8 C16 8 14 10 14 12 C14 16 32 16 32 16"/>
+            <path d="M32 16 C32 16 40 8 44 8 C48 8 50 10 50 12 C50 16 32 16 32 16"/>
+          </svg>
+        </div>
+        <h3>Gift Boxes</h3>
+        <p>Rigid and folding boxes in bespoke sizes. Foil stamping, embossing and spot UV available for that premium unboxing moment.</p>
+        <a href="#" class="product-link">View Range</a>
+      </div>
+
+      <!-- Food Containers -->
+      <div class="product-card reveal">
+        <div class="product-icon">
+          <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 20 L10 48 C10 52 14 56 20 56 L44 56 C50 56 54 52 54 48 L54 20"/>
+            <path d="M6 14 L58 14 L58 20 L6 20 Z"/>
+            <path d="M8 8 L56 8 L58 14 L6 14 Z"/>
+            <line x1="22" y1="30" x2="22" y2="46" opacity="0.4"/>
+            <line x1="32" y1="28" x2="32" y2="48" opacity="0.4"/>
+            <line x1="42" y1="30" x2="42" y2="46" opacity="0.4"/>
+          </svg>
+        </div>
+        <h3>Food Containers</h3>
+        <p>Deli boxes, salad bowls, noodle pails and more. Eco-friendly options that keep food fresh and your brand front of mind.</p>
+        <a href="#" class="product-link">View Range</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIALS ═══ -->
+<section class="section section--dark" id="testimonials">
+  <div class="container text-center">
+    <div class="sparkle-field" id="testimonial-sparkles" style="position:relative;height:0;overflow:visible;"></div>
+    <p class="section-pretitle reveal">What They Say</p>
+    <h2 class="section-title reveal" style="color:var(--white);">Client Testimonials</h2>
+    <p class="section-subtitle reveal" style="color:rgba(255,255,255,0.5);">Trusted by cafes, restaurants, retailers and brands across the UK.</p>
+
+    <div class="testimonials-grid">
+      <div class="testimonial reveal reveal-delay-1">
+        <div class="stars">&#9733; &#9733; &#9733; &#9733; &#9733;</div>
+        <p class="testimonial-text">Our branded coffee cups completely transformed how customers see us. People actually photograph them and share on Instagram. The print quality is impeccable.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">S</div>
+          <div>
+            <div class="testimonial-name" style="color:var(--white);">Sarah Mitchell</div>
+            <div class="testimonial-role">The Daily Grind, Manchester</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial reveal reveal-delay-2">
+        <div class="stars">&#9733; &#9733; &#9733; &#9733; &#9733;</div>
+        <p class="testimonial-text">We switched all our takeaway packaging to Brand Brothers. The ordering process was seamless, delivery was fast, and our customers constantly compliment the packaging.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">J</div>
+          <div>
+            <div class="testimonial-name" style="color:var(--white);">James Harlow</div>
+            <div class="testimonial-role">Harlow's Kitchen, London</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial reveal reveal-delay-3">
+        <div class="stars">&#9733; &#9733; &#9733; &#9733; &#9733;</div>
+        <p class="testimonial-text">The gift boxes we ordered for our jewellery line are absolutely stunning. The foil stamping gives such a luxurious feel. Worth every penny and our clients love them.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">E</div>
+          <div>
+            <div class="testimonial-name" style="color:var(--white);">Emma Rothwell</div>
+            <div class="testimonial-role">Rothwell & Co, Edinburgh</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA SECTION ═══ -->
+<section class="cta-section section" id="cta">
+  <div class="cta-border"></div>
+  <div class="container text-center">
+    <div class="fan-motif reveal"></div>
+    <p class="section-pretitle reveal">Ready to Begin?</p>
+    <h2 class="section-title reveal">Your Brand Deserves Better Packaging</h2>
+    <p class="section-subtitle reveal">Join hundreds of UK businesses who trust Brand Brothers to make their brand unforgettable. Get a free quote today.</p>
+    <div class="reveal">
+      <a href="#" class="btn btn--filled" style="margin-right:16px;">Get a Free Quote</a>
+      <a href="#" class="btn">View All Products</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-brand">BRAND BROTHERS</div>
+    <div class="footer-tagline">Make Every Package Unforgettable</div>
+    <ul class="footer-links">
+      <li><a href="#">Products</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Contact</a></li>
+      <li><a href="#">FAQ</a></li>
+      <li><a href="#">Terms</a></li>
+    </ul>
+    <div class="footer-divider"></div>
+    <p class="footer-copy">&copy; 2026 Brand Brothers &mdash; brandbrothers.co.uk &mdash; All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+// ── Scroll Reveal ──
+const revealEls = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+revealEls.forEach(el => revealObserver.observe(el));
+
+// ── Navbar scroll effect ──
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// ── Generate sparkles in hero ──
+function createSparkles(containerId, count) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  for (let i = 0; i < count; i++) {
+    const sparkle = document.createElement('div');
+    sparkle.className = 'sparkle';
+    sparkle.style.left = Math.random() * 100 + '%';
+    sparkle.style.top = Math.random() * 100 + '%';
+    sparkle.style.width = (2 + Math.random() * 4) + 'px';
+    sparkle.style.height = sparkle.style.width;
+    sparkle.style.animationDelay = (Math.random() * 4) + 's';
+    sparkle.style.animationDuration = (1.5 + Math.random() * 3) + 's';
+    container.appendChild(sparkle);
+  }
+}
+
+// ── Generate confetti in hero ──
+function createConfetti(containerId, count) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  const colors = ['#C9A84C', '#E8D48B', '#A07C1C', 'rgba(255,255,255,0.6)', 'rgba(201,168,76,0.5)'];
+  for (let i = 0; i < count; i++) {
+    const confetti = document.createElement('div');
+    confetti.className = 'confetti';
+    confetti.style.left = Math.random() * 100 + '%';
+    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.animationDelay = (Math.random() * 10) + 's';
+    confetti.style.animationDuration = (6 + Math.random() * 8) + 's';
+    confetti.style.transform = 'rotate(' + (Math.random() * 360) + 'deg)';
+    confetti.style.width = (4 + Math.random() * 4) + 'px';
+    confetti.style.height = (6 + Math.random() * 8) + 'px';
+    container.appendChild(confetti);
+  }
+}
+
+createSparkles('hero-sparkles', 50);
+createConfetti('hero-sparkles', 25);
+</script>
+
+</body>
+</html>
