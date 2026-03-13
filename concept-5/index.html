@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brand Brothers — Custom Branded Packaging</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --navy: #0a0e1a;
+  --navy-light: #141a2e;
+  --burgundy: #4a0e1a;
+  --burgundy-deep: #2d0610;
+  --copper: #b87333;
+  --copper-light: #d4956a;
+  --copper-bright: #e8a96a;
+  --amber: #d4a04a;
+  --amber-glow: #f5c96a;
+  --gold: #c9a84c;
+  --cream: #f0e6d3;
+  --cream-dim: #c9b99a;
+  --black: #050709;
+  --text-body: #c9bfae;
+  --text-muted: #8a7f6e;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Cormorant Garamond', serif;
+  background: var(--black);
+  color: var(--text-body);
+  overflow-x: hidden;
+  line-height: 1.7;
+  font-size: 18px;
+}
+
+/* Noise / grain overlay on entire page */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* Vignette overlay */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 9998;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(5,7,9,0.6) 100%);
+}
+
+/* Scroll animation base */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.15s; }
+.reveal-delay-2 { transition-delay: 0.3s; }
+.reveal-delay-3 { transition-delay: 0.45s; }
+.reveal-delay-4 { transition-delay: 0.6s; }
+
+/* ===== ORNATE BORDER COMPONENT ===== */
+.ornate-border {
+  position: relative;
+  border: 1px solid rgba(184,115,51,0.25);
+  padding: 3px;
+}
+.ornate-border::before {
+  content: '';
+  position: absolute;
+  top: 6px; left: 6px; right: 6px; bottom: 6px;
+  border: 1px solid rgba(184,115,51,0.15);
+  pointer-events: none;
+}
+.ornate-corner {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border-color: var(--copper);
+  border-style: solid;
+  border-width: 0;
+}
+.ornate-corner.tl { top: -1px; left: -1px; border-top-width: 2px; border-left-width: 2px; }
+.ornate-corner.tr { top: -1px; right: -1px; border-top-width: 2px; border-right-width: 2px; }
+.ornate-corner.bl { bottom: -1px; left: -1px; border-bottom-width: 2px; border-left-width: 2px; }
+.ornate-corner.br { bottom: -1px; right: -1px; border-bottom-width: 2px; border-right-width: 2px; }
+
+/* ===== COPPER METALLIC TEXT ===== */
+.copper-text {
+  background: linear-gradient(135deg, var(--copper) 0%, var(--amber-glow) 40%, var(--copper-light) 60%, var(--copper) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gold-text {
+  background: linear-gradient(135deg, var(--gold) 0%, var(--amber-glow) 50%, var(--gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ===== DIVIDER ===== */
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 24px auto;
+  max-width: 400px;
+}
+.divider .line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--copper), transparent);
+}
+.divider .diamond {
+  width: 8px;
+  height: 8px;
+  background: var(--copper);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+/* ===== SECTION HEADING ===== */
+.section-heading {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+.section-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  text-align: center;
+  color: var(--text-muted);
+  font-style: italic;
+  font-weight: 300;
+  margin-bottom: 48px;
+}
+
+/* =========================================
+   HERO SECTION
+   ========================================= */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 24px;
+  overflow: hidden;
+}
+
+/* Dramatic radial lighting from above */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120%;
+  height: 80%;
+  background: radial-gradient(ellipse at center, rgba(184,115,51,0.08) 0%, rgba(74,14,26,0.04) 40%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Spotlight cone effect */
+.hero::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(212,160,74,0.06) 0%, rgba(184,115,51,0.02) 30%, transparent 60%);
+  clip-path: polygon(40% 0%, 60% 0%, 80% 100%, 20% 100%);
+  pointer-events: none;
+}
+
+/* Velvet background */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(74,14,26,0.3) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 80%, rgba(10,14,26,0.8) 0%, transparent 50%),
+    linear-gradient(180deg, var(--navy) 0%, var(--burgundy-deep) 50%, var(--black) 100%);
+  z-index: -1;
+}
+
+.hero-frame {
+  position: relative;
+  padding: 60px 48px;
+  max-width: 800px;
+  width: 100%;
+}
+
+/* SVG ornate frame around hero content */
+.hero-frame-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.hero-pretitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(0.85rem, 1.5vw, 1rem);
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--copper-light);
+  margin-bottom: 20px;
+  font-weight: 500;
+  opacity: 0;
+  animation: fadeUp 1s 0.3s ease forwards;
+}
+
+.hero-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(2.5rem, 7vw, 5.5rem);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 12px;
+  letter-spacing: 0.04em;
+  opacity: 0;
+  animation: fadeUp 1s 0.6s ease forwards;
+}
+
+.hero-tagline {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(0.9rem, 2vw, 1.3rem);
+  letter-spacing: 0.15em;
+  color: var(--cream-dim);
+  font-weight: 400;
+  margin-bottom: 32px;
+  opacity: 0;
+  animation: fadeUp 1s 0.9s ease forwards;
+}
+
+.hero .divider {
+  opacity: 0;
+  animation: fadeUp 1s 1s ease forwards;
+}
+
+.hero-description {
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  color: var(--text-muted);
+  max-width: 500px;
+  margin: 0 auto 40px;
+  font-style: italic;
+  font-weight: 300;
+  opacity: 0;
+  animation: fadeUp 1s 1.2s ease forwards;
+}
+
+.hero-cta {
+  opacity: 0;
+  animation: fadeUp 1s 1.5s ease forwards;
+}
+
+/* Knock animation on load */
+.knock-indicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  animation: fadeUp 1s 2s ease forwards;
+}
+.knock-dots {
+  display: flex;
+  gap: 10px;
+}
+.knock-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--copper);
+  opacity: 0.3;
+  animation: knock 2s infinite;
+}
+.knock-dot:nth-child(2) { animation-delay: 0.25s; }
+.knock-dot:nth-child(3) { animation-delay: 0.5s; }
+.knock-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+@keyframes knock {
+  0%, 70%, 100% { opacity: 0.2; transform: scale(1); }
+  15% { opacity: 1; transform: scale(1.4); }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== BUTTONS ===== */
+.btn {
+  display: inline-block;
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 16px 44px;
+  border: 1px solid var(--copper);
+  color: var(--cream);
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.4s ease, border-color 0.4s ease;
+}
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--copper) 0%, var(--burgundy) 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: -1;
+}
+.btn:hover {
+  color: #fff;
+  border-color: var(--copper-light);
+}
+.btn:hover::before {
+  opacity: 1;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, rgba(184,115,51,0.15) 0%, rgba(74,14,26,0.15) 100%);
+}
+
+/* =========================================
+   HOW IT WORKS
+   ========================================= */
+.how-it-works {
+  padding: 120px 24px;
+  position: relative;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(74,14,26,0.15) 0%, transparent 60%),
+    linear-gradient(180deg, var(--black) 0%, var(--navy) 40%, var(--navy) 60%, var(--black) 100%);
+}
+
+.steps-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .steps-container { grid-template-columns: 1fr; max-width: 400px; }
+}
+
+.step-card {
+  text-align: center;
+  padding: 48px 32px 40px;
+  position: relative;
+  background: linear-gradient(180deg, rgba(20,26,46,0.6) 0%, rgba(10,14,26,0.4) 100%);
+  border: 1px solid rgba(184,115,51,0.12);
+  transition: border-color 0.4s ease, transform 0.4s ease;
+}
+.step-card:hover {
+  border-color: rgba(184,115,51,0.35);
+  transform: translateY(-4px);
+}
+
+.step-number {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 24px;
+  background: linear-gradient(180deg, var(--copper-bright) 0%, var(--copper) 60%, rgba(184,115,51,0.3) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.step-icon {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.step-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--cream);
+  margin-bottom: 12px;
+}
+
+.step-desc {
+  font-size: 1rem;
+  color: var(--text-muted);
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+/* Connecting line between steps (desktop) */
+.step-connector {
+  display: none;
+}
+@media (min-width: 769px) {
+  .steps-container { position: relative; }
+}
+
+/* =========================================
+   PRODUCTS SECTION
+   ========================================= */
+.products {
+  padding: 120px 24px;
+  position: relative;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(74,14,26,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 50%, rgba(184,115,51,0.06) 0%, transparent 50%),
+    linear-gradient(180deg, var(--black) 0%, var(--burgundy-deep) 50%, var(--black) 100%);
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+@media (max-width: 960px) {
+  .products-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 540px) {
+  .products-grid { grid-template-columns: 1fr; max-width: 360px; }
+}
+
+.product-card {
+  position: relative;
+  text-align: center;
+  padding: 40px 24px 36px;
+  background: linear-gradient(180deg, rgba(20,26,46,0.5) 0%, rgba(5,7,9,0.7) 100%);
+  border: 1px solid rgba(184,115,51,0.1);
+  transition: border-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+  cursor: default;
+}
+.product-card:hover {
+  border-color: rgba(184,115,51,0.4);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(184,115,51,0.08);
+}
+
+.product-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 24px;
+  position: relative;
+}
+.product-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Glow behind product icon on hover */
+.product-card:hover .product-icon::before {
+  content: '';
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(circle, rgba(184,115,51,0.15) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.product-name {
+  font-family: 'Cinzel', serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--cream);
+  margin-bottom: 10px;
+}
+
+.product-desc {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.product-from {
+  display: inline-block;
+  margin-top: 16px;
+  font-family: 'Cinzel', serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  color: var(--copper-light);
+  border-bottom: 1px solid rgba(184,115,51,0.3);
+  padding-bottom: 2px;
+}
+
+/* =========================================
+   TESTIMONIALS
+   ========================================= */
+.testimonials {
+  padding: 120px 24px;
+  position: relative;
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(10,14,26,0.9) 0%, transparent 70%),
+    linear-gradient(180deg, var(--black) 0%, var(--navy) 50%, var(--black) 100%);
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 36px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .testimonials-grid { grid-template-columns: 1fr; max-width: 500px; }
+}
+
+.testimonial-card {
+  padding: 40px 32px;
+  background: linear-gradient(180deg, rgba(20,26,46,0.4) 0%, rgba(5,7,9,0.5) 100%);
+  border: 1px solid rgba(184,115,51,0.08);
+  position: relative;
+  transition: border-color 0.4s ease;
+}
+.testimonial-card:hover {
+  border-color: rgba(184,115,51,0.25);
+}
+
+.testimonial-quote {
+  font-size: 2.5rem;
+  line-height: 1;
+  color: var(--copper);
+  opacity: 0.4;
+  font-family: 'Cinzel Decorative', serif;
+  margin-bottom: 8px;
+}
+
+.testimonial-text {
+  font-size: 1.05rem;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--cream-dim);
+  margin-bottom: 24px;
+  line-height: 1.8;
+}
+
+.testimonial-author {
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--copper-light);
+}
+
+.testimonial-role {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 300;
+  margin-top: 4px;
+}
+
+/* =========================================
+   CTA SECTION
+   ========================================= */
+.cta-section {
+  padding: 120px 24px;
+  text-align: center;
+  position: relative;
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(74,14,26,0.2) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 70%, rgba(184,115,51,0.06) 0%, transparent 50%),
+    linear-gradient(180deg, var(--black) 0%, var(--burgundy-deep) 50%, var(--navy) 100%);
+}
+
+.cta-frame {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 60px 48px;
+  position: relative;
+}
+
+.cta-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.cta-text {
+  font-size: 1.15rem;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--text-muted);
+  max-width: 460px;
+  margin: 0 auto 40px;
+  line-height: 1.8;
+}
+
+/* =========================================
+   FOOTER
+   ========================================= */
+.footer {
+  padding: 48px 24px 32px;
+  text-align: center;
+  background: var(--black);
+  border-top: 1px solid rgba(184,115,51,0.1);
+}
+
+.footer-logo {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.footer-links a {
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.footer-links a:hover {
+  color: var(--copper-light);
+}
+
+.footer-copy {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 300;
+}
+
+/* =========================================
+   UTILITY
+   ========================================= */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Ambient floating particles (pseudo) */
+.ambient-glow {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(80px);
+  opacity: 0.08;
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero-bg"></div>
+
+  <div class="hero-frame">
+    <!-- Ornate SVG frame -->
+    <svg class="hero-frame-svg" viewBox="0 0 800 500" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Outer frame -->
+      <rect x="1" y="1" width="798" height="498" stroke="url(#copper-grad)" stroke-width="1" opacity="0.3"/>
+      <!-- Inner frame -->
+      <rect x="12" y="12" width="776" height="476" stroke="url(#copper-grad)" stroke-width="0.5" opacity="0.2"/>
+      <!-- Corner ornaments -->
+      <g opacity="0.5">
+        <!-- Top-left -->
+        <path d="M0,40 Q0,0 40,0" stroke="url(#copper-grad)" stroke-width="2" fill="none"/>
+        <circle cx="20" cy="20" r="3" fill="url(#copper-grad)" opacity="0.4"/>
+        <path d="M6,20 L34,20 M20,6 L20,34" stroke="url(#copper-grad)" stroke-width="0.5" opacity="0.3"/>
+        <!-- Top-right -->
+        <path d="M800,40 Q800,0 760,0" stroke="url(#copper-grad)" stroke-width="2" fill="none"/>
+        <circle cx="780" cy="20" r="3" fill="url(#copper-grad)" opacity="0.4"/>
+        <path d="M766,20 L794,20 M780,6 L780,34" stroke="url(#copper-grad)" stroke-width="0.5" opacity="0.3"/>
+        <!-- Bottom-left -->
+        <path d="M0,460 Q0,500 40,500" stroke="url(#copper-grad)" stroke-width="2" fill="none"/>
+        <circle cx="20" cy="480" r="3" fill="url(#copper-grad)" opacity="0.4"/>
+        <path d="M6,480 L34,480 M20,466 L20,494" stroke="url(#copper-grad)" stroke-width="0.5" opacity="0.3"/>
+        <!-- Bottom-right -->
+        <path d="M800,460 Q800,500 760,500" stroke="url(#copper-grad)" stroke-width="2" fill="none"/>
+        <circle cx="780" cy="480" r="3" fill="url(#copper-grad)" opacity="0.4"/>
+        <path d="M766,480 L794,480 M780,466 L780,494" stroke="url(#copper-grad)" stroke-width="0.5" opacity="0.3"/>
+      </g>
+      <!-- Top center ornament -->
+      <g opacity="0.35" transform="translate(400, 0)">
+        <path d="M-40,1 L-10,1 L0,12 L10,1 L40,1" stroke="url(#copper-grad)" stroke-width="1.5" fill="none"/>
+        <circle cx="0" cy="4" r="2" fill="url(#copper-grad)"/>
+      </g>
+      <!-- Bottom center ornament -->
+      <g opacity="0.35" transform="translate(400, 500)">
+        <path d="M-40,-1 L-10,-1 L0,-12 L10,-1 L40,-1" stroke="url(#copper-grad)" stroke-width="1.5" fill="none"/>
+        <circle cx="0" cy="-4" r="2" fill="url(#copper-grad)"/>
+      </g>
+      <defs>
+        <linearGradient id="copper-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#b87333"/>
+          <stop offset="50%" stop-color="#d4956a"/>
+          <stop offset="100%" stop-color="#b87333"/>
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <p class="hero-pretitle">Members Only &mdash; Est. 2024</p>
+
+    <h1 class="hero-title copper-text">Brand<br>Brothers</h1>
+
+    <p class="hero-tagline">Custom Branded Packaging</p>
+
+    <div class="divider">
+      <span class="line"></span>
+      <span class="diamond"></span>
+      <span class="line"></span>
+    </div>
+
+    <p class="hero-description">
+      Your logo. Our craft. Packaging so distinguished,<br>
+      they&rsquo;ll think you have connections.
+    </p>
+
+    <div class="hero-cta">
+      <a href="#products" class="btn btn-primary">View the Collection</a>
+    </div>
+  </div>
+
+  <div class="knock-indicator">
+    <div class="knock-dots">
+      <span class="knock-dot"></span>
+      <span class="knock-dot"></span>
+      <span class="knock-dot"></span>
+    </div>
+    <span class="knock-text">Knock Three Times</span>
+  </div>
+</section>
+
+<!-- ===== HOW IT WORKS ===== -->
+<section class="how-it-works" id="how-it-works">
+  <div class="container">
+    <h2 class="section-heading copper-text reveal">How It Works</h2>
+    <p class="section-subtitle reveal reveal-delay-1">Three simple steps to bespoke branded packaging</p>
+
+    <div class="steps-container">
+      <!-- Step 1 -->
+      <div class="step-card ornate-border reveal reveal-delay-1">
+        <span class="ornate-corner tl"></span>
+        <span class="ornate-corner tr"></span>
+        <span class="ornate-corner bl"></span>
+        <span class="ornate-corner br"></span>
+        <div class="step-number">I</div>
+        <div class="step-icon">
+          <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="12" y="8" width="32" height="40" rx="2" stroke="#b87333" stroke-width="1.5" opacity="0.7"/>
+            <path d="M22 28 L28 22 L34 28" stroke="#d4956a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M28 22 L28 38" stroke="#d4956a" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M20 18 L36 18" stroke="#b87333" stroke-width="0.5" opacity="0.4"/>
+          </svg>
+        </div>
+        <h3 class="step-title">Upload Your Logo</h3>
+        <p class="step-desc">Send us your brand assets. We handle the rest &mdash; formatting, colour matching, perfection.</p>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="step-card ornate-border reveal reveal-delay-2">
+        <span class="ornate-corner tl"></span>
+        <span class="ornate-corner tr"></span>
+        <span class="ornate-corner bl"></span>
+        <span class="ornate-corner br"></span>
+        <div class="step-number">II</div>
+        <div class="step-icon">
+          <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="8" y="12" width="18" height="22" rx="2" stroke="#b87333" stroke-width="1.5" opacity="0.5"/>
+            <rect x="20" y="16" width="18" height="22" rx="2" stroke="#b87333" stroke-width="1.5" opacity="0.7"/>
+            <rect x="30" y="20" width="18" height="22" rx="2" stroke="#d4956a" stroke-width="1.5"/>
+            <path d="M36 28 L42 28 M39 25 L39 31" stroke="#d4956a" stroke-width="1" stroke-linecap="round" opacity="0.7"/>
+          </svg>
+        </div>
+        <h3 class="step-title">Choose Products</h3>
+        <p class="step-desc">Cups, bags, boxes, containers &mdash; pick your lineup from our curated collection.</p>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="step-card ornate-border reveal reveal-delay-3">
+        <span class="ornate-corner tl"></span>
+        <span class="ornate-corner tr"></span>
+        <span class="ornate-corner bl"></span>
+        <span class="ornate-corner br"></span>
+        <div class="step-number">III</div>
+        <div class="step-icon">
+          <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="18" width="36" height="24" rx="2" stroke="#b87333" stroke-width="1.5" opacity="0.7"/>
+            <path d="M10 24 L28 24 L28 42 L10 42" stroke="#b87333" stroke-width="0.5" opacity="0.3"/>
+            <path d="M18 14 L28 18" stroke="#d4956a" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M38 14 L28 18" stroke="#d4956a" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="20" cy="46" r="3" stroke="#d4956a" stroke-width="1.2"/>
+            <circle cx="40" cy="46" r="3" stroke="#d4956a" stroke-width="1.2"/>
+          </svg>
+        </div>
+        <h3 class="step-title">We Print &amp; Ship</h3>
+        <p class="step-desc">Expertly printed and delivered to your door. Fast turnaround, no minimum fuss.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRODUCTS ===== -->
+<section class="products" id="products">
+  <div class="container">
+    <h2 class="section-heading copper-text reveal">The Collection</h2>
+    <p class="section-subtitle reveal reveal-delay-1">Every piece, a canvas for your brand</p>
+
+    <div class="products-grid">
+      <!-- Coffee Cups -->
+      <div class="product-card reveal reveal-delay-1">
+        <div class="product-icon">
+          <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 25 L24 65 L56 65 L60 25 Z" stroke="#b87333" stroke-width="1.5" fill="rgba(184,115,51,0.05)"/>
+            <path d="M18 20 L62 20 L62 25 L18 25 Z" stroke="#d4956a" stroke-width="1.2" fill="rgba(212,149,106,0.08)"/>
+            <path d="M60 32 Q72 32 72 42 Q72 52 60 52" stroke="#b87333" stroke-width="1.2" fill="none"/>
+            <!-- Steam -->
+            <path d="M34 14 Q36 8 34 4" stroke="#d4956a" stroke-width="0.8" stroke-linecap="round" opacity="0.4"/>
+            <path d="M40 16 Q42 10 40 5" stroke="#d4956a" stroke-width="0.8" stroke-linecap="round" opacity="0.3"/>
+            <path d="M46 14 Q48 8 46 4" stroke="#d4956a" stroke-width="0.8" stroke-linecap="round" opacity="0.4"/>
+            <!-- Brand mark -->
+            <circle cx="40" cy="44" r="10" stroke="#d4956a" stroke-width="0.8" opacity="0.3"/>
+            <text x="40" y="48" text-anchor="middle" fill="#d4956a" font-size="8" font-family="serif" opacity="0.5">BB</text>
+          </svg>
+        </div>
+        <h3 class="product-name">Coffee Cups</h3>
+        <p class="product-desc">Single &amp; double wall, fully custom printed with your branding.</p>
+        <span class="product-from">From 100 units</span>
+      </div>
+
+      <!-- Paper Bags -->
+      <div class="product-card reveal reveal-delay-2">
+        <div class="product-icon">
+          <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 22 L18 68 L62 68 L62 22 Z" stroke="#b87333" stroke-width="1.5" fill="rgba(184,115,51,0.05)"/>
+            <path d="M18 22 L24 14 L56 14 L62 22" stroke="#d4956a" stroke-width="1.2" fill="rgba(212,149,106,0.08)"/>
+            <path d="M28 22 L28 14" stroke="#b87333" stroke-width="0.8" opacity="0.3"/>
+            <path d="M52 22 L52 14" stroke="#b87333" stroke-width="0.8" opacity="0.3"/>
+            <!-- Handles -->
+            <path d="M30 22 Q30 28 34 28 Q38 28 38 22" stroke="#d4956a" stroke-width="1" fill="none"/>
+            <path d="M42 22 Q42 28 46 28 Q50 28 50 22" stroke="#d4956a" stroke-width="1" fill="none"/>
+            <!-- Brand mark -->
+            <rect x="30" y="38" width="20" height="16" rx="1" stroke="#d4956a" stroke-width="0.6" opacity="0.3"/>
+            <text x="40" y="50" text-anchor="middle" fill="#d4956a" font-size="7" font-family="serif" opacity="0.5">BB</text>
+          </svg>
+        </div>
+        <h3 class="product-name">Paper Bags</h3>
+        <p class="product-desc">Kraft &amp; luxury finish bags that carry your brand with distinction.</p>
+        <span class="product-from">From 250 units</span>
+      </div>
+
+      <!-- Gift Boxes -->
+      <div class="product-card reveal reveal-delay-3">
+        <div class="product-icon">
+          <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="14" y="30" width="52" height="36" rx="1" stroke="#b87333" stroke-width="1.5" fill="rgba(184,115,51,0.05)"/>
+            <rect x="10" y="22" width="60" height="10" rx="1" stroke="#d4956a" stroke-width="1.2" fill="rgba(212,149,106,0.08)"/>
+            <!-- Ribbon vertical -->
+            <rect x="37" y="22" width="6" height="44" fill="rgba(184,115,51,0.1)" stroke="#d4956a" stroke-width="0.8"/>
+            <!-- Bow -->
+            <path d="M40 22 Q32 16 36 12 Q40 8 40 14" stroke="#d4956a" stroke-width="1" fill="rgba(212,149,106,0.08)"/>
+            <path d="M40 22 Q48 16 44 12 Q40 8 40 14" stroke="#d4956a" stroke-width="1" fill="rgba(212,149,106,0.08)"/>
+            <circle cx="40" cy="18" r="2" fill="#d4956a" opacity="0.5"/>
+          </svg>
+        </div>
+        <h3 class="product-name">Gift Boxes</h3>
+        <p class="product-desc">Premium presentation boxes that make unboxing an experience.</p>
+        <span class="product-from">From 100 units</span>
+      </div>
+
+      <!-- Food Containers -->
+      <div class="product-card reveal reveal-delay-4">
+        <div class="product-icon">
+          <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="40" cy="24" rx="26" ry="8" stroke="#d4956a" stroke-width="1.2" fill="rgba(212,149,106,0.08)"/>
+            <path d="M14 24 L14 56 Q14 64 40 64 Q66 64 66 56 L66 24" stroke="#b87333" stroke-width="1.5" fill="rgba(184,115,51,0.05)"/>
+            <ellipse cx="40" cy="56" rx="26" ry="8" stroke="#b87333" stroke-width="0.5" opacity="0.3"/>
+            <!-- Lid line -->
+            <path d="M14 24 Q14 32 40 32 Q66 32 66 24" stroke="#b87333" stroke-width="0.5" opacity="0.3"/>
+            <!-- Brand mark -->
+            <circle cx="40" cy="44" r="8" stroke="#d4956a" stroke-width="0.6" opacity="0.3"/>
+            <text x="40" y="47" text-anchor="middle" fill="#d4956a" font-size="6" font-family="serif" opacity="0.5">BB</text>
+          </svg>
+        </div>
+        <h3 class="product-name">Food Containers</h3>
+        <p class="product-desc">Bowls, trays &amp; clamshells &mdash; branded packaging for every bite.</p>
+        <span class="product-from">From 500 units</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TESTIMONIALS ===== -->
+<section class="testimonials" id="testimonials">
+  <div class="container">
+    <h2 class="section-heading copper-text reveal">Word on the Street</h2>
+    <p class="section-subtitle reveal reveal-delay-1">What our inner circle has to say</p>
+
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal reveal-delay-1">
+        <div class="testimonial-quote">&ldquo;</div>
+        <p class="testimonial-text">Our customers started photographing the cups. The cups! Brand Brothers turned our takeaway packaging into free marketing.</p>
+        <p class="testimonial-author copper-text">Sophie Hartley</p>
+        <p class="testimonial-role">Founder, Bloom Coffee Roasters</p>
+      </div>
+
+      <div class="testimonial-card reveal reveal-delay-2">
+        <div class="testimonial-quote">&ldquo;</div>
+        <p class="testimonial-text">The quality is exceptional. We switched from a big-name supplier and the difference was night and day. Plus their turnaround is remarkable.</p>
+        <p class="testimonial-author copper-text">James Whitfield</p>
+        <p class="testimonial-role">Operations Director, The Pantry Group</p>
+      </div>
+
+      <div class="testimonial-card reveal reveal-delay-3">
+        <div class="testimonial-quote">&ldquo;</div>
+        <p class="testimonial-text">We needed bespoke gift boxes for a product launch. Brand Brothers delivered ahead of schedule and under budget. Genuinely impressive.</p>
+        <p class="testimonial-author copper-text">Priya Mehta</p>
+        <p class="testimonial-role">Marketing Lead, Aura Skincare</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="cta-section" id="contact">
+  <div class="cta-frame ornate-border reveal">
+    <span class="ornate-corner tl"></span>
+    <span class="ornate-corner tr"></span>
+    <span class="ornate-corner bl"></span>
+    <span class="ornate-corner br"></span>
+
+    <h2 class="cta-title gold-text reveal reveal-delay-1">Ready to Join?</h2>
+
+    <div class="divider reveal reveal-delay-2">
+      <span class="line"></span>
+      <span class="diamond"></span>
+      <span class="line"></span>
+    </div>
+
+    <p class="cta-text reveal reveal-delay-2">
+      The door is open &mdash; for now. Get a free quote on custom branded packaging and elevate your brand to something unforgettable.
+    </p>
+
+    <div class="reveal reveal-delay-3">
+      <a href="mailto:hello@brandbrothers.co.uk" class="btn btn-primary">Request a Quote</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer-logo copper-text">Brand Brothers</div>
+  <nav class="footer-links">
+    <a href="#products">Products</a>
+    <a href="#how-it-works">How It Works</a>
+    <a href="#testimonials">Testimonials</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <p class="footer-copy">&copy; 2024 Brand Brothers. All rights reserved. brandbrothers.co.uk</p>
+</footer>
+
+<!-- ===== SCROLL REVEAL SCRIPT ===== -->
+<script>
+(function() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -40px 0px'
+  });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Parallax-like subtle movement on hero
+  const hero = document.querySelector('.hero');
+  if (hero) {
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const heroHeight = hero.offsetHeight;
+      if (scrolled < heroHeight) {
+        const frame = hero.querySelector('.hero-frame');
+        if (frame) {
+          frame.style.transform = `translateY(${scrolled * 0.15}px)`;
+          frame.style.opacity = 1 - (scrolled / heroHeight) * 0.6;
+        }
+      }
+    }, { passive: true });
+  }
+
+  // Smooth anchor scroll
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

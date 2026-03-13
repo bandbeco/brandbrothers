@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brand Brothers — Custom Branded Packaging</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Righteous&family=Nunito+Sans:ital,opsz,wght@0,6..12,300..1000;1,6..12,300..1000&display=swap" rel="stylesheet">
+<style>
+  /* ── Reset & Base ── */
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Nunito Sans', sans-serif;
+    color: #2a2d35;
+    background: #f4f6f8;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+  h1, h2, h3, h4 { font-family: 'Righteous', cursive; font-weight: 400; }
+
+  /* ── Palette ── */
+  :root {
+    --chrome-light: #e8ecf0;
+    --chrome-mid: #c0c8d0;
+    --chrome-dark: #6b7a8d;
+    --mint: #a8e0d0;
+    --mint-dark: #5cbda5;
+    --white: #ffffff;
+    --off-white: #f4f6f8;
+    --dark: #1e2128;
+    --speed-line: rgba(168, 224, 208, 0.35);
+  }
+
+  /* ── Scroll Animation ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(36px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-60px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(60px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* ── Speed Lines (global decorative) ── */
+  .speed-lines {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .speed-lines .line {
+    position: absolute;
+    height: 2px;
+    border-radius: 1px;
+    background: var(--speed-line);
+    animation: speedLineSlide 4s linear infinite;
+  }
+
+  @keyframes speedLineSlide {
+    0%   { transform: translateX(-120%); opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 1; }
+    100% { transform: translateX(120vw); opacity: 0; }
+  }
+
+  /* ── Nav ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: linear-gradient(180deg, rgba(30,33,40,0.92) 0%, rgba(30,33,40,0.82) 100%);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(168,224,208,0.15);
+  }
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    height: 64px;
+  }
+  .nav-logo {
+    font-family: 'Righteous', cursive;
+    font-size: 1.35rem;
+    color: var(--white);
+    text-decoration: none;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .nav-logo .dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--mint);
+    display: inline-block;
+    box-shadow: 0 0 8px rgba(168,224,208,0.6);
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--chrome-mid);
+    text-decoration: none;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    transition: color 0.25s;
+  }
+  .nav-links a:hover { color: var(--mint); }
+  .nav-cta {
+    background: linear-gradient(135deg, var(--mint) 0%, var(--mint-dark) 100%);
+    color: var(--dark) !important;
+    padding: 8px 22px;
+    border-radius: 50px;
+    font-weight: 700 !important;
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .nav-cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 18px rgba(92,189,165,0.4);
+  }
+
+  /* ── Hero ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(165deg, #1e2128 0%, #272b34 40%, #2d323d 100%);
+    overflow: hidden;
+  }
+  /* Chrome horizontal bands */
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 38%;
+    left: -5%;
+    right: -5%;
+    height: 220px;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(168,224,208,0.04) 20%,
+      rgba(192,200,208,0.08) 45%,
+      rgba(255,255,255,0.05) 50%,
+      rgba(192,200,208,0.08) 55%,
+      rgba(168,224,208,0.04) 80%,
+      transparent 100%
+    );
+    border-radius: 50%;
+    transform: skewY(-2deg);
+    z-index: 0;
+  }
+  .hero-speed-lines .line:nth-child(1)  { top: 12%; width: 280px; left: 5%; animation-delay: 0s; animation-duration: 3.5s; }
+  .hero-speed-lines .line:nth-child(2)  { top: 18%; width: 420px; left: -2%; animation-delay: 0.7s; animation-duration: 4.2s; }
+  .hero-speed-lines .line:nth-child(3)  { top: 26%; width: 180px; left: 10%; animation-delay: 1.2s; animation-duration: 3s; }
+  .hero-speed-lines .line:nth-child(4)  { top: 35%; width: 500px; left: -5%; animation-delay: 0.3s; animation-duration: 5s; background: rgba(192,200,208,0.2); height: 3px; }
+  .hero-speed-lines .line:nth-child(5)  { top: 55%; width: 350px; left: 3%; animation-delay: 1.8s; animation-duration: 3.8s; }
+  .hero-speed-lines .line:nth-child(6)  { top: 62%; width: 240px; left: 8%; animation-delay: 2.5s; animation-duration: 4.5s; }
+  .hero-speed-lines .line:nth-child(7)  { top: 72%; width: 480px; left: -3%; animation-delay: 0.5s; animation-duration: 4s; background: rgba(192,200,208,0.15); }
+  .hero-speed-lines .line:nth-child(8)  { top: 80%; width: 200px; left: 12%; animation-delay: 3s; animation-duration: 3.2s; }
+  .hero-speed-lines .line:nth-child(9)  { top: 44%; width: 600px; left: -8%; animation-delay: 1s; animation-duration: 6s; height: 1px; background: rgba(168,224,208,0.2); }
+  .hero-speed-lines .line:nth-child(10) { top: 88%; width: 320px; left: 0%; animation-delay: 2s; animation-duration: 4.8s; }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 800px;
+    padding: 0 32px;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(168,224,208,0.12);
+    border: 1px solid rgba(168,224,208,0.25);
+    color: var(--mint);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 8px 24px;
+    border-radius: 50px;
+    margin-bottom: 28px;
+  }
+  .hero h1 {
+    font-size: clamp(2.6rem, 6vw, 4.5rem);
+    color: var(--white);
+    line-height: 1.12;
+    margin-bottom: 10px;
+    letter-spacing: -0.5px;
+  }
+  .hero h1 .accent {
+    background: linear-gradient(135deg, var(--mint) 0%, #d4f0e8 50%, var(--mint-dark) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--chrome-mid);
+    max-width: 540px;
+    margin: 20px auto 40px;
+    line-height: 1.7;
+  }
+  .hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 36px;
+    background: linear-gradient(135deg, var(--mint) 0%, var(--mint-dark) 100%);
+    color: var(--dark);
+    font-family: 'Righteous', cursive;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 24px rgba(92,189,165,0.3);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(92,189,165,0.45);
+  }
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 36px;
+    background: transparent;
+    color: var(--chrome-mid);
+    font-family: 'Righteous', cursive;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    border: 2px solid rgba(192,200,208,0.3);
+    border-radius: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.3s, color 0.3s;
+  }
+  .btn-secondary:hover {
+    border-color: var(--mint);
+    color: var(--mint);
+  }
+
+  /* Chrome divider */
+  .chrome-divider {
+    height: 4px;
+    background: linear-gradient(90deg, transparent 0%, var(--chrome-mid) 20%, var(--white) 50%, var(--chrome-mid) 80%, transparent 100%);
+    border-radius: 2px;
+    opacity: 0.3;
+  }
+
+  /* ── Section: How It Works ── */
+  .how-it-works {
+    position: relative;
+    padding: 120px 32px;
+    background: var(--off-white);
+    overflow: hidden;
+  }
+  .section-header {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+  .section-tag {
+    display: inline-block;
+    background: linear-gradient(135deg, rgba(168,224,208,0.15), rgba(168,224,208,0.05));
+    color: var(--mint-dark);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 6px 20px;
+    border-radius: 50px;
+    margin-bottom: 16px;
+    border: 1px solid rgba(168,224,208,0.2);
+  }
+  .section-header h2 {
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    color: var(--dark);
+    margin-bottom: 12px;
+  }
+  .section-header p {
+    font-size: 1.05rem;
+    color: var(--chrome-dark);
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    max-width: 1060px;
+    margin: 0 auto;
+    position: relative;
+  }
+  /* Connecting line between steps */
+  .steps::before {
+    content: '';
+    position: absolute;
+    top: 72px;
+    left: 16%;
+    right: 16%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--mint), var(--chrome-mid), var(--mint));
+    border-radius: 2px;
+    opacity: 0.25;
+    z-index: 0;
+  }
+  .step-card {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    background: var(--white);
+    border-radius: 24px;
+    padding: 48px 28px 40px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.04);
+    border: 1px solid rgba(192,200,208,0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .step-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+  }
+  .step-number {
+    width: 56px; height: 56px;
+    margin: 0 auto 24px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--mint) 0%, var(--mint-dark) 100%);
+    color: var(--dark);
+    font-family: 'Righteous', cursive;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(92,189,165,0.3);
+  }
+  .step-icon {
+    font-size: 2.4rem;
+    margin-bottom: 16px;
+    display: block;
+  }
+  .step-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+    color: var(--dark);
+  }
+  .step-card p {
+    font-size: 0.95rem;
+    color: var(--chrome-dark);
+    line-height: 1.65;
+  }
+
+  /* ── Section: Products ── */
+  .products {
+    position: relative;
+    padding: 120px 32px;
+    background: linear-gradient(165deg, #1e2128 0%, #272b34 100%);
+    overflow: hidden;
+  }
+  .products .section-header h2 { color: var(--white); }
+  .products .section-header p { color: var(--chrome-mid); }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .product-card {
+    position: relative;
+    background: linear-gradient(160deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    border: 1px solid rgba(168,224,208,0.1);
+    border-radius: 24px;
+    padding: 36px 24px 32px;
+    text-align: center;
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    overflow: hidden;
+  }
+  .product-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--mint), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .product-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(168,224,208,0.3);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.3);
+  }
+  .product-card:hover::before { opacity: 1; }
+
+  .product-visual {
+    width: 110px;
+    height: 110px;
+    margin: 0 auto 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    background: linear-gradient(145deg, rgba(168,224,208,0.12), rgba(168,224,208,0.04));
+    border: 1px solid rgba(168,224,208,0.15);
+    position: relative;
+  }
+  /* Speed accent on product visual */
+  .product-visual::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -20px;
+    width: 28px;
+    height: 2px;
+    background: var(--mint);
+    opacity: 0.3;
+    border-radius: 1px;
+    transform: translateY(-50%);
+  }
+  .product-card h3 {
+    color: var(--white);
+    font-size: 1.15rem;
+    margin-bottom: 8px;
+  }
+  .product-card p {
+    color: var(--chrome-mid);
+    font-size: 0.88rem;
+    line-height: 1.6;
+    margin-bottom: 18px;
+  }
+  .product-from {
+    display: inline-block;
+    background: rgba(168,224,208,0.1);
+    color: var(--mint);
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 6px 16px;
+    border-radius: 50px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── Section: Testimonials ── */
+  .testimonials {
+    position: relative;
+    padding: 120px 32px;
+    background: var(--off-white);
+    overflow: hidden;
+  }
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    max-width: 1060px;
+    margin: 0 auto;
+  }
+  .testimonial-card {
+    background: var(--white);
+    border-radius: 24px;
+    padding: 36px 28px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.04);
+    border: 1px solid rgba(192,200,208,0.2);
+    position: relative;
+    transition: transform 0.3s;
+  }
+  .testimonial-card:hover {
+    transform: translateY(-3px);
+  }
+  /* Chrome accent bar */
+  .testimonial-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 32px; right: 32px;
+    height: 3px;
+    border-radius: 0 0 3px 3px;
+    background: linear-gradient(90deg, var(--mint), var(--chrome-mid));
+    opacity: 0.5;
+  }
+  .testimonial-stars {
+    color: var(--mint-dark);
+    font-size: 0.95rem;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+  }
+  .testimonial-card blockquote {
+    font-size: 0.95rem;
+    color: var(--dark);
+    line-height: 1.7;
+    font-style: italic;
+    margin-bottom: 20px;
+  }
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .testimonial-avatar {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--mint), var(--chrome-mid));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Righteous', cursive;
+    font-size: 0.9rem;
+    color: var(--dark);
+  }
+  .testimonial-name {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--dark);
+  }
+  .testimonial-role {
+    font-size: 0.78rem;
+    color: var(--chrome-dark);
+  }
+
+  /* ── Section: CTA ── */
+  .cta-section {
+    position: relative;
+    padding: 120px 32px;
+    background: linear-gradient(165deg, #1e2128 0%, #272b34 100%);
+    text-align: center;
+    overflow: hidden;
+  }
+  .cta-section .speed-lines .line { background: rgba(168,224,208,0.18); }
+  .cta-content {
+    position: relative;
+    z-index: 2;
+  }
+  .cta-section h2 {
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+  .cta-section h2 .accent {
+    background: linear-gradient(135deg, var(--mint) 0%, #d4f0e8 50%, var(--mint-dark) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .cta-section p {
+    color: var(--chrome-mid);
+    font-size: 1.1rem;
+    max-width: 500px;
+    margin: 0 auto 36px;
+  }
+  .cta-features {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+  .cta-feature {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--chrome-mid);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  .cta-feature .check {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: rgba(168,224,208,0.15);
+    color: var(--mint);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+  }
+
+  /* ── Footer ── */
+  footer {
+    background: #181a1f;
+    padding: 48px 32px 32px;
+    border-top: 1px solid rgba(168,224,208,0.08);
+  }
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  .footer-brand {
+    font-family: 'Righteous', cursive;
+    color: var(--white);
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .footer-brand .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--mint);
+    display: inline-block;
+  }
+  .footer-links { display: flex; gap: 24px; list-style: none; }
+  .footer-links a {
+    color: var(--chrome-dark);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.25s;
+  }
+  .footer-links a:hover { color: var(--mint); }
+  .footer-copy {
+    width: 100%;
+    text-align: center;
+    color: rgba(192,200,208,0.4);
+    font-size: 0.78rem;
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .steps { grid-template-columns: 1fr; max-width: 400px; }
+    .steps::before { display: none; }
+    .product-grid { grid-template-columns: repeat(2, 1fr); }
+    .testimonial-grid { grid-template-columns: 1fr; max-width: 480px; }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 600px) {
+    .product-grid { grid-template-columns: 1fr; max-width: 360px; }
+    .hero-actions { flex-direction: column; align-items: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── Nav ── -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo"><span class="dot"></span>Brand Brothers</a>
+    <ul class="nav-links">
+      <li><a href="#how-it-works">How It Works</a></li>
+      <li><a href="#products">Products</a></li>
+      <li><a href="#testimonials">Testimonials</a></li>
+      <li><a href="#cta" class="nav-cta">Get Started</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── Hero ── -->
+<section class="hero">
+  <div class="speed-lines hero-speed-lines">
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">Custom Branded Packaging</div>
+    <h1>Your Brand,<br><span class="accent">Beautifully Packaged</span></h1>
+    <p class="hero-sub">Premium custom-printed packaging that makes every unboxing an experience. Coffee cups, bags, boxes and more -- all featuring your logo.</p>
+    <div class="hero-actions">
+      <a href="#cta" class="btn-primary">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Start Your Order
+      </a>
+      <a href="#products" class="btn-secondary">View Products</a>
+    </div>
+  </div>
+</section>
+
+<div class="chrome-divider"></div>
+
+<!-- ── How It Works ── -->
+<section class="how-it-works" id="how-it-works">
+  <div class="section-header reveal">
+    <span class="section-tag">Simple Process</span>
+    <h2>How It Works</h2>
+    <p>From your logo to your customer's hands in three effortless steps.</p>
+  </div>
+  <div class="steps">
+    <div class="step-card reveal" style="transition-delay: 0.1s;">
+      <div class="step-number">1</div>
+      <span class="step-icon">
+        <svg width="48" height="48" fill="none" viewBox="0 0 48 48"><rect x="8" y="12" width="32" height="24" rx="4" stroke="#5cbda5" stroke-width="2.5"/><path d="M20 28l4-8 4 8M16 32h16" stroke="#5cbda5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 4v6M18 6l6 4 6-4" stroke="#a8e0d0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      <h3>Upload Your Logo</h3>
+      <p>Send us your artwork in any format. Our design team will optimise it for print at no extra cost.</p>
+    </div>
+    <div class="step-card reveal" style="transition-delay: 0.25s;">
+      <div class="step-number">2</div>
+      <span class="step-icon">
+        <svg width="48" height="48" fill="none" viewBox="0 0 48 48"><rect x="6" y="14" width="16" height="22" rx="3" stroke="#5cbda5" stroke-width="2.3"/><rect x="26" y="14" width="16" height="22" rx="3" stroke="#5cbda5" stroke-width="2.3"/><path d="M14 20h0M14 26h0M34 20h0M34 26h0" stroke="#a8e0d0" stroke-width="3" stroke-linecap="round"/><path d="M20 8h8" stroke="#a8e0d0" stroke-width="2" stroke-linecap="round"/></svg>
+      </span>
+      <h3>Choose Products</h3>
+      <p>Pick from our range of cups, bags, boxes, and food packaging. Select quantities that suit your needs.</p>
+    </div>
+    <div class="step-card reveal" style="transition-delay: 0.4s;">
+      <div class="step-number">3</div>
+      <span class="step-icon">
+        <svg width="48" height="48" fill="none" viewBox="0 0 48 48"><rect x="8" y="18" width="32" height="20" rx="4" stroke="#5cbda5" stroke-width="2.3"/><path d="M8 26h32" stroke="#5cbda5" stroke-width="2"/><path d="M14 38v4M34 38v4" stroke="#5cbda5" stroke-width="2.5" stroke-linecap="round"/><path d="M18 14l6-6 6 6" stroke="#a8e0d0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      <h3>We Print &amp; Ship</h3>
+      <p>We produce your order in-house and ship UK-wide. Most orders dispatched within 5 working days.</p>
+    </div>
+  </div>
+</section>
+
+<div class="chrome-divider"></div>
+
+<!-- ── Products ── -->
+<section class="products" id="products">
+  <div class="speed-lines">
+    <div class="line" style="top:15%; width:300px; left:2%; animation-delay:0.3s; animation-duration:5s;"></div>
+    <div class="line" style="top:50%; width:400px; left:-2%; animation-delay:1.5s; animation-duration:4.5s;"></div>
+    <div class="line" style="top:80%; width:250px; left:5%; animation-delay:2.8s; animation-duration:3.8s;"></div>
+  </div>
+  <div class="section-header reveal">
+    <span class="section-tag">Our Range</span>
+    <h2 style="color: var(--white);">Product Showcase</h2>
+    <p>Quality packaging, custom-branded to make your business stand out.</p>
+  </div>
+  <div class="product-grid">
+    <div class="product-card reveal-left" style="transition-delay: 0.1s;">
+      <div class="product-visual">&#9749;</div>
+      <h3>Paper Coffee Cups</h3>
+      <p>Single and double-wall cups in 8oz, 12oz and 16oz. Full-colour print wrapping around the cup.</p>
+      <span class="product-from">From 500 units</span>
+    </div>
+    <div class="product-card reveal-left" style="transition-delay: 0.2s;">
+      <div class="product-visual">&#127876;</div>
+      <h3>Paper Bags</h3>
+      <p>Flat-handle and twist-handle bags in a range of sizes. Kraft or white, printed with your branding.</p>
+      <span class="product-from">From 250 units</span>
+    </div>
+    <div class="product-card reveal-right" style="transition-delay: 0.2s;">
+      <div class="product-visual">&#127873;</div>
+      <h3>Gift Boxes</h3>
+      <p>Rigid and folding boxes for retail, subscription and gifting. Matt, gloss or soft-touch lamination.</p>
+      <span class="product-from">From 100 units</span>
+    </div>
+    <div class="product-card reveal-right" style="transition-delay: 0.1s;">
+      <div class="product-visual">&#127837;</div>
+      <h3>Food Containers</h3>
+      <p>Takeaway boxes, deli pots, and meal trays. Grease-resistant and food-safe, branded with your logo.</p>
+      <span class="product-from">From 500 units</span>
+    </div>
+  </div>
+</section>
+
+<div class="chrome-divider"></div>
+
+<!-- ── Testimonials ── -->
+<section class="testimonials" id="testimonials">
+  <div class="section-header reveal">
+    <span class="section-tag">Trusted by Hundreds</span>
+    <h2>What Our Customers Say</h2>
+    <p>Businesses across the UK rely on Brand Brothers for their packaging.</p>
+  </div>
+  <div class="testimonial-grid">
+    <div class="testimonial-card reveal" style="transition-delay: 0.1s;">
+      <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <blockquote>"Our branded coffee cups have become a walking advert. Customers photograph them and post on social media -- it's been brilliant for visibility."</blockquote>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">SH</div>
+        <div>
+          <div class="testimonial-name">Sarah Hutchinson</div>
+          <div class="testimonial-role">Founder, Bloom Coffee</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal" style="transition-delay: 0.25s;">
+      <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <blockquote>"The quality of print on the gift boxes is outstanding. Our subscription customers always comment on the unboxing experience. Couldn't ask for more."</blockquote>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">JW</div>
+        <div>
+          <div class="testimonial-name">James Whitmore</div>
+          <div class="testimonial-role">Director, The Artisan Pantry</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal" style="transition-delay: 0.4s;">
+      <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <blockquote>"We switched from generic containers and the difference is night and day. Brand Brothers made the whole process painless, and delivery was spot on."</blockquote>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">RP</div>
+        <div>
+          <div class="testimonial-name">Raj Patel</div>
+          <div class="testimonial-role">Owner, Spice Street Kitchen</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="chrome-divider"></div>
+
+<!-- ── CTA ── -->
+<section class="cta-section" id="cta">
+  <div class="speed-lines">
+    <div class="line" style="top:20%; width:350px; left:0%; animation-delay:0s; animation-duration:4s;"></div>
+    <div class="line" style="top:45%; width:500px; left:-5%; animation-delay:1.2s; animation-duration:5.5s; height:3px; background:rgba(192,200,208,0.12);"></div>
+    <div class="line" style="top:70%; width:280px; left:3%; animation-delay:2.4s; animation-duration:3.5s;"></div>
+    <div class="line" style="top:85%; width:400px; left:-2%; animation-delay:0.6s; animation-duration:4.8s;"></div>
+  </div>
+  <div class="cta-content reveal">
+    <span class="section-tag">Ready to Go?</span>
+    <h2>Make Your Brand <span class="accent">Unforgettable</span></h2>
+    <p>Get a free quote today. No minimum fuss, fast turnaround, and UK-wide delivery.</p>
+    <div class="cta-features">
+      <span class="cta-feature"><span class="check">&#10003;</span> Free design assistance</span>
+      <span class="cta-feature"><span class="check">&#10003;</span> UK-wide delivery</span>
+      <span class="cta-feature"><span class="check">&#10003;</span> 5-day turnaround</span>
+    </div>
+    <a href="#" class="btn-primary">
+      <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Get Your Free Quote
+    </a>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand"><span class="dot"></span>Brand Brothers</div>
+    <ul class="footer-links">
+      <li><a href="#">Products</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Contact</a></li>
+      <li><a href="#">Privacy Policy</a></li>
+    </ul>
+    <div class="footer-copy">&copy; 2026 Brand Brothers Ltd. All rights reserved. brandbrothers.co.uk</div>
+  </div>
+</footer>
+
+<!-- ── Scroll Reveal Script ── -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const els = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    els.forEach(el => observer.observe(el));
+  });
+</script>
+
+</body>
+</html>
