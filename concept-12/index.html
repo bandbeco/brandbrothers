@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brand Brothers — The Works</title>
+<link href="https://fonts.googleapis.com/css2?family=Changa+One&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --soot: #1A1714;
+    --iron: #2E2A25;
+    --steel: #5C574F;
+    --steel-light: #8A8378;
+    --furnace: #D45A20;
+    --furnace-glow: #F28C38;
+    --ember: #C23A1A;
+    --parchment: #E8DFD0;
+    --parchment-dark: #D4C9B6;
+    --rivet: #6B6560;
+    --rivet-highlight: #9E978E;
+    --blueprint: #1E2A35;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--soot);
+    color: var(--parchment);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── RIVET MIXIN (via pseudo + radial gradients) ── */
+  .riveted {
+    position: relative;
+  }
+  .riveted::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    background:
+      /* Top row */
+      radial-gradient(circle 4px at 16px 16px, var(--rivet-highlight) 2px, var(--rivet) 2.5px, transparent 4px),
+      radial-gradient(circle 4px at 50px 16px, var(--rivet-highlight) 2px, var(--rivet) 2.5px, transparent 4px),
+      radial-gradient(circle 4px at calc(100% - 50px) 16px, var(--rivet-highlight) 2px, var(--rivet) 2.5px, transparent 4px),
+      radial-gradient(circle 4px at calc(100% - 16px) 16px, var(--rivet-highlight) 2px, var(--rivet) 2.5px, transparent 4px),
+      /* Bottom row */
+      radial-gradient(circle 4px at 16px calc(100% - 16px), var(--rivet-highlight) 2px, var(--rivet) 2.5px, transparent 4px),
+      radial-gradient(circle 4px at 50px calc(100% - 16px), var(--rivet-highlight) 2px, var(--rivet) 2.5px, transparent 4px),
+      radial-gradient(circle 4px at calc(100% - 50px) calc(100% - 16px), var(--rivet-highlight) 2px, var(--rivet) 2.5px, transparent 4px),
+      radial-gradient(circle 4px at calc(100% - 16px) calc(100% - 16px), var(--rivet-highlight) 2px, var(--rivet) 2.5px, transparent 4px);
+    background-repeat: no-repeat;
+  }
+
+  /* Small rivets for cards */
+  .riveted-sm::before {
+    background:
+      radial-gradient(circle 3px at 10px 10px, var(--rivet-highlight) 1.5px, var(--rivet) 2px, transparent 3px),
+      radial-gradient(circle 3px at calc(100% - 10px) 10px, var(--rivet-highlight) 1.5px, var(--rivet) 2px, transparent 3px),
+      radial-gradient(circle 3px at 10px calc(100% - 10px), var(--rivet-highlight) 1.5px, var(--rivet) 2px, transparent 3px),
+      radial-gradient(circle 3px at calc(100% - 10px) calc(100% - 10px), var(--rivet-highlight) 1.5px, var(--rivet) 2px, transparent 3px);
+    background-repeat: no-repeat;
+  }
+
+  /* ── CORRUGATED TEXTURE ── */
+  .corrugated {
+    background-image: repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,0.02) 0px,
+      rgba(0,0,0,0.03) 2px,
+      rgba(255,255,255,0.02) 4px
+    );
+  }
+
+  /* ── BLUEPRINT GRID ── */
+  .blueprint-bg {
+    background-image:
+      linear-gradient(rgba(94,87,79,0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(94,87,79,0.08) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* ── STAMP EFFECT ── */
+  .stamp {
+    display: inline-block;
+    border: 2px dashed var(--furnace);
+    padding: 0.3rem 0.8rem;
+    font-family: 'Changa One', cursive;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--furnace);
+    transform: rotate(-2deg);
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* ── NAVIGATION ── */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 0;
+    transition: background 0.3s;
+    border-bottom: 3px solid var(--iron);
+  }
+  nav.scrolled {
+    background: rgba(26,23,20,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom-color: var(--furnace);
+  }
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0.8rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .nav-logo {
+    font-family: 'Changa One', cursive;
+    font-size: 1.3rem;
+    color: var(--furnace);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .nav-logo span {
+    color: var(--parchment);
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    display: block;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 500;
+    margin-top: -2px;
+  }
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--steel-light);
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--furnace); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-end;
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 0;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, var(--soot) 0%, rgba(26,23,20,0.6) 60%, var(--soot) 100%),
+      radial-gradient(ellipse at 50% 80%, rgba(212,90,32,0.08) 0%, transparent 60%);
+  }
+  /* Blueprint grid in hero */
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(212,90,32,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(212,90,32,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    padding: 0 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 12rem;
+    padding-top: 10rem;
+  }
+
+  .hero-stamp {
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: stampIn 0.6s 0.3s forwards;
+  }
+
+  .hero h1 {
+    font-family: 'Changa One', cursive;
+    font-size: clamp(3rem, 7vw, 6rem);
+    line-height: 1.05;
+    text-transform: uppercase;
+    color: var(--parchment);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: slideUp 0.8s 0.5s forwards;
+  }
+  .hero h1 .furnace { color: var(--furnace); }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    font-weight: 300;
+    color: var(--steel-light);
+    max-width: 500px;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: slideUp 0.8s 0.7s forwards;
+  }
+
+  .hero-cta {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    background: var(--furnace);
+    color: var(--parchment);
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    transition: all 0.3s;
+    position: relative;
+    opacity: 0;
+    animation: slideUp 0.8s 0.9s forwards;
+  }
+  .hero-cta:hover {
+    background: var(--furnace-glow);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 30px rgba(212,90,32,0.3);
+  }
+
+  /* Factory skyline */
+  .factory-skyline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    height: 280px;
+  }
+  .factory-skyline svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  /* Smoke animations */
+  .smoke-wisp {
+    animation: smokeRise linear infinite;
+    opacity: 0;
+  }
+  .smoke-wisp:nth-child(1) { animation-duration: 6s; animation-delay: 0s; }
+  .smoke-wisp:nth-child(2) { animation-duration: 8s; animation-delay: 1s; }
+  .smoke-wisp:nth-child(3) { animation-duration: 7s; animation-delay: 2s; }
+  .smoke-wisp:nth-child(4) { animation-duration: 9s; animation-delay: 0.5s; }
+  .smoke-wisp:nth-child(5) { animation-duration: 7.5s; animation-delay: 3s; }
+  .smoke-wisp:nth-child(6) { animation-duration: 6.5s; animation-delay: 1.5s; }
+
+  @keyframes smokeRise {
+    0%   { opacity: 0; transform: translateY(0) translateX(0) scale(0.5); }
+    15%  { opacity: 0.25; }
+    50%  { opacity: 0.15; transform: translateY(-80px) translateX(20px) scale(1.2); }
+    100% { opacity: 0; transform: translateY(-180px) translateX(40px) scale(2); }
+  }
+
+  /* Furnace glow */
+  .furnace-glow-rect {
+    animation: furnacePulse 3s ease-in-out infinite;
+  }
+  @keyframes furnacePulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+
+  /* ── PRODUCTION STATS BAR ── */
+  .stats-bar {
+    background: var(--iron);
+    border-top: 3px solid var(--steel);
+    border-bottom: 3px solid var(--steel);
+    padding: 1.5rem 0;
+    position: relative;
+  }
+  .stats-bar .container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .stat {
+    text-align: center;
+  }
+  .stat-value {
+    font-family: 'Changa One', cursive;
+    font-size: 1.8rem;
+    color: var(--furnace);
+    display: block;
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--steel-light);
+  }
+  .stat-divider {
+    width: 1px;
+    height: 40px;
+    background: var(--steel);
+  }
+
+  /* ── SECTION HEADING ── */
+  .section-heading {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+  .section-heading .label {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--furnace);
+    border: 1px dashed var(--steel);
+    padding: 0.4rem 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+  .section-heading h2 {
+    font-family: 'Changa One', cursive;
+    font-size: clamp(2rem, 4vw, 3rem);
+    text-transform: uppercase;
+    color: var(--parchment);
+    letter-spacing: 0.05em;
+  }
+  .section-heading .rule {
+    width: 80px;
+    height: 3px;
+    background: var(--furnace);
+    margin: 1rem auto 0;
+  }
+
+  /* ── HOW IT WORKS / CONVEYOR ── */
+  .conveyor-section {
+    padding: 6rem 0;
+    background: var(--soot);
+    position: relative;
+  }
+
+  .conveyor {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin-top: 2rem;
+  }
+
+  /* The belt */
+  .conveyor-belt {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: var(--iron);
+    transform: translateY(-50%);
+    overflow: hidden;
+    border-radius: 3px;
+  }
+  .conveyor-belt::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent 0px,
+      transparent 14px,
+      var(--steel) 14px,
+      var(--steel) 16px
+    );
+    animation: beltMove 2s linear infinite;
+  }
+  @keyframes beltMove {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(16px); }
+  }
+
+  /* Rollers */
+  .conveyor-roller {
+    position: absolute;
+    top: 50%;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, var(--steel-light), var(--steel) 60%, var(--iron));
+    border: 2px solid var(--iron);
+    transform: translateY(-50%);
+    z-index: 1;
+  }
+  .conveyor-roller:first-of-type { left: -12px; }
+  .conveyor-roller:last-of-type { right: -12px; }
+
+  .conveyor-step {
+    flex: 1;
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 2.5rem 1.5rem;
+  }
+
+  .step-plate {
+    background: var(--iron);
+    border: 2px solid var(--steel);
+    padding: 2.5rem 1.5rem 2rem;
+    position: relative;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .step-plate:hover {
+    border-color: var(--furnace);
+    transform: translateY(-4px);
+  }
+
+  .step-number {
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 36px;
+    height: 36px;
+    background: var(--furnace);
+    color: var(--parchment);
+    font-family: 'Changa One', cursive;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  }
+
+  .step-icon {
+    width: 56px;
+    height: 56px;
+    margin: 0.5rem auto 1.2rem;
+  }
+
+  .step-plate h3 {
+    font-family: 'Changa One', cursive;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--parchment);
+    margin-bottom: 0.75rem;
+  }
+  .step-plate p {
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: var(--steel-light);
+    font-weight: 300;
+  }
+
+  /* Conveyor arrows between steps */
+  .conveyor-arrow {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    padding: 0 0.5rem;
+  }
+  .conveyor-arrow svg {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+  }
+
+  /* ── PRODUCTS ── */
+  .products-section {
+    padding: 6rem 0;
+    background: var(--iron);
+    position: relative;
+  }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  .product-card {
+    background: linear-gradient(145deg, #333029, #2A2722);
+    border: 2px solid var(--steel);
+    padding: 2.5rem 2rem;
+    position: relative;
+    transition: border-color 0.3s, transform 0.3s;
+    overflow: hidden;
+  }
+  .product-card:hover {
+    border-color: var(--furnace);
+    transform: translateY(-3px);
+  }
+  .product-card:hover .product-glow {
+    opacity: 1;
+  }
+
+  .product-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--furnace), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .product-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+
+  .product-icon {
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+  }
+
+  .product-stamp {
+    border: 1.5px dashed var(--furnace);
+    padding: 0.2rem 0.6rem;
+    font-family: 'Changa One', cursive;
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--furnace);
+    transform: rotate(-3deg);
+    white-space: nowrap;
+  }
+
+  .product-card h3 {
+    font-family: 'Changa One', cursive;
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    color: var(--parchment);
+    letter-spacing: 0.04em;
+    margin-bottom: 0.6rem;
+  }
+  .product-card p {
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: var(--steel-light);
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+  }
+
+  .product-specs {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .spec {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--steel-light);
+    background: rgba(255,255,255,0.04);
+    padding: 0.3rem 0.7rem;
+    border: 1px solid var(--steel);
+  }
+
+  .product-link {
+    display: inline-block;
+    margin-top: 1.2rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--furnace);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .product-link:hover { color: var(--furnace-glow); }
+  .product-link::after {
+    content: ' \2192';
+  }
+
+  /* ── TESTIMONIALS / INSPECTION CARDS ── */
+  .testimonials-section {
+    padding: 6rem 0;
+    background: var(--soot);
+  }
+
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .inspection-card {
+    background: var(--parchment);
+    color: var(--soot);
+    padding: 2rem;
+    position: relative;
+    border: 2px solid var(--parchment-dark);
+    transition: transform 0.3s;
+  }
+  .inspection-card:hover {
+    transform: translateY(-3px);
+  }
+
+  .inspection-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 2px solid var(--soot);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  .inspection-title {
+    font-family: 'Changa One', cursive;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--iron);
+  }
+  .inspection-no {
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: var(--steel);
+    letter-spacing: 0.1em;
+  }
+
+  .inspection-card blockquote {
+    font-size: 0.92rem;
+    line-height: 1.75;
+    color: var(--iron);
+    font-style: italic;
+    margin-bottom: 1.2rem;
+    font-weight: 400;
+  }
+
+  .inspection-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .inspection-author {
+    font-family: 'Changa One', cursive;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--soot);
+    letter-spacing: 0.05em;
+  }
+  .inspection-role {
+    font-size: 0.72rem;
+    color: var(--steel);
+    font-weight: 400;
+    display: block;
+    margin-top: 0.2rem;
+    font-family: 'Barlow', sans-serif;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .inspection-stamp {
+    border: 2px solid var(--ember);
+    color: var(--ember);
+    font-family: 'Changa One', cursive;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.6rem;
+    transform: rotate(-6deg);
+    opacity: 0.7;
+  }
+
+  /* ── GEARS DIVIDER ── */
+  .gears-divider {
+    padding: 2rem 0;
+    text-align: center;
+    background: var(--iron);
+    border-top: 2px solid var(--steel);
+    border-bottom: 2px solid var(--steel);
+    overflow: hidden;
+  }
+  .gears-divider svg {
+    display: inline-block;
+  }
+  .gear-spin {
+    transform-origin: center;
+    animation: gearRotate 12s linear infinite;
+  }
+  .gear-spin-reverse {
+    transform-origin: center;
+    animation: gearRotateReverse 12s linear infinite;
+  }
+  @keyframes gearRotate {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+  @keyframes gearRotateReverse {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(-360deg); }
+  }
+
+  /* ── CTA ── */
+  .cta-section {
+    padding: 5rem 0;
+    background: var(--furnace);
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent 0px,
+      transparent 3px,
+      rgba(0,0,0,0.06) 3px,
+      rgba(0,0,0,0.06) 4px
+    );
+  }
+  .cta-inner {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+  }
+  .cta-inner h2 {
+    font-family: 'Changa One', cursive;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    text-transform: uppercase;
+    color: var(--parchment);
+    margin-bottom: 0.75rem;
+  }
+  .cta-inner p {
+    font-size: 1rem;
+    color: rgba(232,223,208,0.85);
+    font-weight: 300;
+    margin-bottom: 2rem;
+  }
+  .cta-btn {
+    display: inline-block;
+    padding: 1rem 3rem;
+    background: var(--soot);
+    color: var(--furnace-glow);
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 2px solid var(--soot);
+    transition: all 0.3s;
+  }
+  .cta-btn:hover {
+    background: transparent;
+    color: var(--parchment);
+    border-color: var(--parchment);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--soot);
+    border-top: 3px solid var(--iron);
+    padding: 3rem 0 1.5rem;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 2.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .footer-brand {
+    font-family: 'Changa One', cursive;
+    font-size: 1.2rem;
+    color: var(--furnace);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.8rem;
+  }
+  .footer-desc {
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: var(--steel-light);
+    font-weight: 300;
+    max-width: 260px;
+  }
+  .footer-col h4 {
+    font-family: 'Changa One', cursive;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--parchment);
+    margin-bottom: 1rem;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 0.5rem; }
+  .footer-col a {
+    font-size: 0.82rem;
+    color: var(--steel-light);
+    text-decoration: none;
+    font-weight: 300;
+    transition: color 0.3s;
+  }
+  .footer-col a:hover { color: var(--furnace); }
+
+  .footer-bottom {
+    border-top: 1px solid var(--iron);
+    padding-top: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-copy {
+    font-size: 0.72rem;
+    color: var(--steel);
+    letter-spacing: 0.04em;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes stampIn {
+    0%   { opacity: 0; transform: rotate(-2deg) scale(2); }
+    60%  { opacity: 1; transform: rotate(-2deg) scale(0.95); }
+    100% { opacity: 1; transform: rotate(-2deg) scale(1); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(35px);
+    transition: opacity 0.7s, transform 0.7s;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .conveyor {
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .conveyor-belt, .conveyor-roller, .conveyor-arrow { display: none; }
+    .product-grid { grid-template-columns: 1fr; }
+    .testimonial-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+    .stats-bar .container { gap: 1.5rem; }
+    .stat-divider { display: none; }
+  }
+  @media (max-width: 600px) {
+    .footer-top { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; gap: 0.8rem; text-align: center; }
+    .hero-content { padding-bottom: 14rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════ NAV ══════════ -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      Brand Brothers
+      <span>Packaging Manufacturers</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#process">The Process</a></li>
+      <li><a href="#products">Products</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#quote">Get a Quote</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-content">
+    <div class="hero-stamp">
+      <span class="stamp">Est. 2026 &bull; Birmingham, England</span>
+    </div>
+    <h1>Built to<br><span class="furnace">Brand</span></h1>
+    <p class="hero-sub">Industrial-grade custom packaging, printed with your identity. From coffee cups to shipping boxes &mdash; we manufacture it all under one roof.</p>
+    <a href="#quote" class="hero-cta">Request a Quote</a>
+  </div>
+
+  <!-- Factory Skyline -->
+  <div class="factory-skyline">
+    <svg viewBox="0 0 1440 280" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+      <!-- Sky glow -->
+      <defs>
+        <linearGradient id="skyGlow" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="transparent"/>
+          <stop offset="100%" stop-color="rgba(212,90,32,0.06)"/>
+        </linearGradient>
+      </defs>
+      <rect width="1440" height="280" fill="url(#skyGlow)"/>
+
+      <!-- Main factory buildings -->
+      <rect x="0" y="140" width="120" height="140" fill="#2E2A25"/>
+      <rect x="100" y="100" width="80" height="180" fill="#252220"/>
+      <rect x="160" y="60" width="30" height="220" fill="#333029"/> <!-- chimney -->
+      <rect x="200" y="130" width="140" height="150" fill="#2E2A25"/>
+      <rect x="220" y="80" width="25" height="200" fill="#3A3530"/> <!-- chimney -->
+      <rect x="320" y="110" width="100" height="170" fill="#252220"/>
+      <rect x="340" y="150" width="60" height="10" fill="#1A1714"/> <!-- window row -->
+      <rect x="340" y="170" width="60" height="10" fill="#1A1714"/>
+      <rect x="340" y="190" width="60" height="10" fill="#1A1714"/>
+
+      <!-- Sawtooth roof section -->
+      <polygon points="440,140 480,100 520,140 560,100 600,140 640,100 680,140" fill="#2E2A25"/>
+      <rect x="440" y="140" width="240" height="140" fill="#2E2A25"/>
+
+      <!-- Tall chimney -->
+      <rect x="700" y="30" width="22" height="250" fill="#333029"/>
+      <rect x="694" y="26" width="34" height="12" fill="#3A3530"/>
+
+      <!-- Main works building -->
+      <rect x="740" y="90" width="200" height="190" fill="#252220"/>
+      <rect x="760" y="96" width="40" height="50" fill="rgba(212,90,32,0.08)"/> <!-- window -->
+      <rect x="820" y="96" width="40" height="50" fill="rgba(212,90,32,0.06)"/>
+      <rect x="880" y="96" width="40" height="50" fill="rgba(212,90,32,0.08)"/>
+      <!-- Furnace glow -->
+      <rect class="furnace-glow-rect" x="780" y="220" width="60" height="60" fill="rgba(212,90,32,0.15)" rx="2"/>
+
+      <rect x="960" y="120" width="100" height="160" fill="#2E2A25"/>
+      <rect x="970" y="70" width="20" height="210" fill="#3A3530"/> <!-- chimney -->
+
+      <rect x="1080" y="100" width="160" height="180" fill="#252220"/>
+      <rect x="1100" y="50" width="25" height="230" fill="#333029"/> <!-- chimney -->
+
+      <rect x="1260" y="130" width="180" height="150" fill="#2E2A25"/>
+      <rect x="1300" y="40" width="28" height="240" fill="#3A3530"/> <!-- chimney -->
+      <rect x="1292" y="36" width="44" height="12" fill="#3A3530"/>
+
+      <!-- Ground line -->
+      <rect x="0" y="275" width="1440" height="5" fill="#1A1714"/>
+
+      <!-- Smoke wisps -->
+      <g>
+        <ellipse class="smoke-wisp" cx="175" cy="55" rx="18" ry="10" fill="rgba(92,87,79,0.3)"/>
+        <ellipse class="smoke-wisp" cx="170" cy="45" rx="14" ry="8" fill="rgba(92,87,79,0.2)"/>
+        <ellipse class="smoke-wisp" cx="232" cy="75" rx="16" ry="9" fill="rgba(92,87,79,0.25)"/>
+        <ellipse class="smoke-wisp" cx="711" cy="22" rx="20" ry="11" fill="rgba(92,87,79,0.3)"/>
+        <ellipse class="smoke-wisp" cx="980" cy="65" rx="15" ry="9" fill="rgba(92,87,79,0.2)"/>
+        <ellipse class="smoke-wisp" cx="1314" cy="32" rx="22" ry="12" fill="rgba(92,87,79,0.25)"/>
+      </g>
+    </svg>
+  </div>
+</section>
+
+<!-- ══════════ STATS BAR ══════════ -->
+<div class="stats-bar corrugated">
+  <div class="container">
+    <div class="stat">
+      <span class="stat-value">10M+</span>
+      <span class="stat-label">Units Produced</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <span class="stat-value">2,400+</span>
+      <span class="stat-label">Brands Served</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <span class="stat-value">100%</span>
+      <span class="stat-label">UK Manufactured</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <span class="stat-value">48hr</span>
+      <span class="stat-label">Sample Turnaround</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ HOW IT WORKS / CONVEYOR ══════════ -->
+<section class="conveyor-section blueprint-bg" id="process">
+  <div class="container">
+    <div class="section-heading reveal">
+      <span class="label">Production Line</span>
+      <h2>How It Works</h2>
+      <div class="rule"></div>
+    </div>
+
+    <div class="conveyor">
+      <div class="conveyor-belt">
+        <div class="conveyor-roller" style="left:-12px"></div>
+        <div class="conveyor-roller" style="right:-12px"></div>
+      </div>
+
+      <div class="conveyor-step reveal">
+        <div class="step-plate riveted riveted-sm">
+          <div class="step-number">1</div>
+          <svg class="step-icon" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="12" y="8" width="32" height="40" rx="2" stroke="#D4B96E" stroke-width="1.5" fill="none" opacity="0.6"/>
+            <path d="M22 24 L28 18 L34 24" stroke="#D4B96E" stroke-width="1.5" fill="none"/>
+            <line x1="28" y1="18" x2="28" y2="34" stroke="#D4B96E" stroke-width="1.5"/>
+            <line x1="20" y1="40" x2="36" y2="40" stroke="#D4B96E" stroke-width="1" opacity="0.4"/>
+          </svg>
+          <h3>Upload Your Logo</h3>
+          <p>Send us your artwork. Any format accepted. Our pre-press team optimises it free of charge.</p>
+        </div>
+      </div>
+
+      <div class="conveyor-arrow">
+        <svg viewBox="0 0 30 30" fill="none"><path d="M5 15 L22 15 M16 9 L22 15 L16 21" stroke="#D45A20" stroke-width="2"/></svg>
+      </div>
+
+      <div class="conveyor-step reveal">
+        <div class="step-plate riveted riveted-sm">
+          <div class="step-number">2</div>
+          <svg class="step-icon" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="8" y="16" width="16" height="26" rx="1" stroke="#D4B96E" stroke-width="1.5" fill="none" opacity="0.6"/>
+            <rect x="32" y="12" width="16" height="32" rx="1" stroke="#D4B96E" stroke-width="1.5" fill="none" opacity="0.6"/>
+            <path d="M24 29 L32 29" stroke="#D4B96E" stroke-width="1" stroke-dasharray="3 2"/>
+            <circle cx="16" cy="24" r="4" stroke="#D4B96E" stroke-width="1" fill="none" opacity="0.5"/>
+            <circle cx="40" cy="22" r="4" stroke="#D4B96E" stroke-width="1" fill="none" opacity="0.5"/>
+          </svg>
+          <h3>Choose Products</h3>
+          <p>Cups, bags, boxes, containers. Pick your sizes, materials, quantities and finishes.</p>
+        </div>
+      </div>
+
+      <div class="conveyor-arrow">
+        <svg viewBox="0 0 30 30" fill="none"><path d="M5 15 L22 15 M16 9 L22 15 L16 21" stroke="#D45A20" stroke-width="2"/></svg>
+      </div>
+
+      <div class="conveyor-step reveal">
+        <div class="step-plate riveted riveted-sm">
+          <div class="step-number">3</div>
+          <svg class="step-icon" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="20" width="36" height="24" rx="2" stroke="#D4B96E" stroke-width="1.5" fill="none" opacity="0.6"/>
+            <path d="M10 28 L46 28" stroke="#D4B96E" stroke-width="1" opacity="0.4"/>
+            <path d="M20 14 L36 14 L38 20 L18 20 Z" stroke="#D4B96E" stroke-width="1.2" fill="none" opacity="0.6"/>
+            <polyline points="24,34 27,38 34,30" stroke="#D45A20" stroke-width="1.5" fill="none"/>
+          </svg>
+          <h3>We Print &amp; Ship</h3>
+          <p>Manufactured on-site, quality checked, and dispatched to your door within 10 working days.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ GEARS DIVIDER ══════════ -->
+<div class="gears-divider">
+  <svg width="200" height="60" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Left gear -->
+    <g class="gear-spin" style="transform-origin: 40px 30px;">
+      <circle cx="40" cy="30" r="16" stroke="#5C574F" stroke-width="2" fill="none"/>
+      <circle cx="40" cy="30" r="6" fill="#5C574F"/>
+      <rect x="38" y="10" width="4" height="8" fill="#5C574F" rx="1"/>
+      <rect x="38" y="42" width="4" height="8" fill="#5C574F" rx="1"/>
+      <rect x="20" y="28" width="8" height="4" fill="#5C574F" rx="1"/>
+      <rect x="52" y="28" width="8" height="4" fill="#5C574F" rx="1"/>
+      <rect x="25" y="16" width="4" height="7" fill="#5C574F" rx="1" transform="rotate(-45 27 19.5)"/>
+      <rect x="51" y="37" width="4" height="7" fill="#5C574F" rx="1" transform="rotate(-45 53 40.5)"/>
+      <rect x="51" y="16" width="4" height="7" fill="#5C574F" rx="1" transform="rotate(45 53 19.5)"/>
+      <rect x="25" y="37" width="4" height="7" fill="#5C574F" rx="1" transform="rotate(45 27 40.5)"/>
+    </g>
+    <!-- Middle line -->
+    <line x1="70" y1="30" x2="130" y2="30" stroke="#5C574F" stroke-width="1" stroke-dasharray="4 4"/>
+    <!-- Right gear -->
+    <g class="gear-spin-reverse" style="transform-origin: 160px 30px;">
+      <circle cx="160" cy="30" r="12" stroke="#5C574F" stroke-width="2" fill="none"/>
+      <circle cx="160" cy="30" r="4.5" fill="#5C574F"/>
+      <rect x="158.5" y="15" width="3" height="6" fill="#5C574F" rx="1"/>
+      <rect x="158.5" y="39" width="3" height="6" fill="#5C574F" rx="1"/>
+      <rect x="145" y="28.5" width="6" height="3" fill="#5C574F" rx="1"/>
+      <rect x="169" y="28.5" width="6" height="3" fill="#5C574F" rx="1"/>
+      <rect x="149" y="19" width="3" height="5.5" fill="#5C574F" rx="1" transform="rotate(-45 150.5 21.75)"/>
+      <rect x="168" y="35.5" width="3" height="5.5" fill="#5C574F" rx="1" transform="rotate(-45 169.5 38.25)"/>
+      <rect x="168" y="19" width="3" height="5.5" fill="#5C574F" rx="1" transform="rotate(45 169.5 21.75)"/>
+      <rect x="149" y="35.5" width="3" height="5.5" fill="#5C574F" rx="1" transform="rotate(45 150.5 38.25)"/>
+    </g>
+  </svg>
+</div>
+
+<!-- ══════════ PRODUCTS ══════════ -->
+<section class="products-section corrugated" id="products">
+  <div class="container">
+    <div class="section-heading reveal">
+      <span class="label">Output</span>
+      <h2>What We Manufacture</h2>
+      <div class="rule"></div>
+    </div>
+
+    <div class="product-grid">
+      <div class="product-card riveted riveted-sm reveal">
+        <div class="product-glow"></div>
+        <div class="product-header">
+          <svg class="product-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 16 C18 14 20 12 22 12 L42 12 C44 12 46 14 46 16 L44 56 C44 58 42 60 40 60 L24 60 C22 60 20 58 20 56 Z" stroke="#D45A20" stroke-width="1.5" fill="none"/>
+            <ellipse cx="32" cy="12" rx="14" ry="3.5" stroke="#D45A20" stroke-width="1.5" fill="none"/>
+            <path d="M26 30 L32 27 L38 30 L38 38 L32 41 L26 38 Z" stroke="#D45A20" stroke-width="0.8" fill="none" opacity="0.5"/>
+          </svg>
+          <span class="product-stamp">Best Seller</span>
+        </div>
+        <h3>Paper Coffee Cups</h3>
+        <p>Single and double-wall in 8oz, 12oz and 16oz. Up to 4-colour print, matte or gloss. Fully recyclable and compostable options.</p>
+        <div class="product-specs">
+          <span class="spec">From 500 units</span>
+          <span class="spec">4-colour print</span>
+          <span class="spec">PE &amp; PLA lined</span>
+        </div>
+        <a href="#" class="product-link">Configure</a>
+      </div>
+
+      <div class="product-card riveted riveted-sm reveal">
+        <div class="product-glow"></div>
+        <div class="product-header">
+          <svg class="product-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 18 L24 6 L40 6 L48 18 L48 58 L16 58 Z" stroke="#D45A20" stroke-width="1.5" fill="none"/>
+            <line x1="16" y1="18" x2="48" y2="18" stroke="#D45A20" stroke-width="1"/>
+            <path d="M28 18 L28 6" stroke="#D45A20" stroke-width="0.8" opacity="0.4"/>
+            <path d="M36 18 L36 6" stroke="#D45A20" stroke-width="0.8" opacity="0.4"/>
+            <rect x="24" y="30" width="16" height="16" rx="1" stroke="#D45A20" stroke-width="0.8" fill="none" opacity="0.5"/>
+          </svg>
+          <span class="product-stamp">Eco Range</span>
+        </div>
+        <h3>Paper Bags</h3>
+        <p>Kraft and luxury paper bags with twisted or flat handles. Retail, takeaway, and gifting formats. 100% recyclable stock.</p>
+        <div class="product-specs">
+          <span class="spec">From 250 units</span>
+          <span class="spec">Kraft &amp; white</span>
+          <span class="spec">Custom sizes</span>
+        </div>
+        <a href="#" class="product-link">Configure</a>
+      </div>
+
+      <div class="product-card riveted riveted-sm reveal">
+        <div class="product-glow"></div>
+        <div class="product-header">
+          <svg class="product-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="12" y="22" width="40" height="32" rx="2" stroke="#D45A20" stroke-width="1.5" fill="none"/>
+            <path d="M12 22 L32 10 L52 22" stroke="#D45A20" stroke-width="1.5" fill="none"/>
+            <line x1="32" y1="10" x2="32" y2="22" stroke="#D45A20" stroke-width="0.6" opacity="0.4"/>
+            <rect x="24" y="34" width="16" height="12" rx="1" stroke="#D45A20" stroke-width="0.8" fill="none" opacity="0.5"/>
+          </svg>
+          <span class="product-stamp">Premium</span>
+        </div>
+        <h3>Gift Boxes</h3>
+        <p>Rigid and foldable with magnetic closures. Embossing, foil stamping, and spot UV available. Tissue paper and ribbon add-ons.</p>
+        <div class="product-specs">
+          <span class="spec">From 100 units</span>
+          <span class="spec">Foil &amp; emboss</span>
+          <span class="spec">Magnetic close</span>
+        </div>
+        <a href="#" class="product-link">Configure</a>
+      </div>
+
+      <div class="product-card riveted riveted-sm reveal">
+        <div class="product-glow"></div>
+        <div class="product-header">
+          <svg class="product-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="18" width="44" height="30" rx="3" stroke="#D45A20" stroke-width="1.5" fill="none"/>
+            <rect x="10" y="42" width="44" height="8" rx="2" stroke="#D45A20" stroke-width="1.2" fill="none"/>
+            <path d="M20 18 L20 10 L44 10 L44 18" stroke="#D45A20" stroke-width="1" fill="none"/>
+            <line x1="20" y1="14" x2="44" y2="14" stroke="#D45A20" stroke-width="0.6" opacity="0.4"/>
+            <circle cx="32" cy="32" r="6" stroke="#D45A20" stroke-width="0.8" fill="none" opacity="0.5"/>
+          </svg>
+          <span class="product-stamp">Food Safe</span>
+        </div>
+        <h3>Food Containers</h3>
+        <p>Deli boxes, salad bowls, and meal trays. Grease-resistant, leak-proof, and fully branded. Compostable materials available.</p>
+        <div class="product-specs">
+          <span class="spec">From 500 units</span>
+          <span class="spec">Grease-proof</span>
+          <span class="spec">Compostable</span>
+        </div>
+        <a href="#" class="product-link">Configure</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ TESTIMONIALS / INSPECTION CARDS ══════════ -->
+<section class="testimonials-section blueprint-bg" id="reviews">
+  <div class="container">
+    <div class="section-heading reveal">
+      <span class="label">Quality Control</span>
+      <h2>Inspection Reports</h2>
+      <div class="rule"></div>
+    </div>
+
+    <div class="testimonial-grid">
+      <div class="inspection-card riveted riveted-sm reveal">
+        <div class="inspection-header">
+          <span class="inspection-title">Brand Brothers &bull; Inspection Card</span>
+          <span class="inspection-no">No. 0847</span>
+        </div>
+        <blockquote>&ldquo;Switched from a faceless supplier to Brand Brothers and the difference is night and day. The cups feel premium, the print is sharp, and our customers notice.&rdquo;</blockquote>
+        <div class="inspection-footer">
+          <div>
+            <span class="inspection-author">James Whitfield</span>
+            <span class="inspection-role">Whitfield &amp; Co. Coffee, London</span>
+          </div>
+          <span class="inspection-stamp">Approved</span>
+        </div>
+      </div>
+
+      <div class="inspection-card riveted riveted-sm reveal">
+        <div class="inspection-header">
+          <span class="inspection-title">Brand Brothers &bull; Inspection Card</span>
+          <span class="inspection-no">No. 1203</span>
+        </div>
+        <blockquote>&ldquo;We needed branded bags that could handle heavy items without tearing. Brand Brothers over-delivered &mdash; strong, beautiful, and on time every single order.&rdquo;</blockquote>
+        <div class="inspection-footer">
+          <div>
+            <span class="inspection-author">Priya Sharma</span>
+            <span class="inspection-role">Borough Kitchen, Birmingham</span>
+          </div>
+          <span class="inspection-stamp">Approved</span>
+        </div>
+      </div>
+
+      <div class="inspection-card riveted riveted-sm reveal">
+        <div class="inspection-header">
+          <span class="inspection-title">Brand Brothers &bull; Inspection Card</span>
+          <span class="inspection-no">No. 1591</span>
+        </div>
+        <blockquote>&ldquo;Our gift boxes needed to feel luxurious without costing the earth. Brand Brothers nailed it &mdash; beautiful presentation, sustainable materials, competitive pricing.&rdquo;</blockquote>
+        <div class="inspection-footer">
+          <div>
+            <span class="inspection-author">Eleanor Fitch</span>
+            <span class="inspection-role">Bloom &amp; Wild Gifts, Manchester</span>
+          </div>
+          <span class="inspection-stamp">Approved</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CTA ══════════ -->
+<section class="cta-section" id="quote">
+  <div class="container cta-inner">
+    <h2>Ready to Start Production?</h2>
+    <p>Free samples. No minimum on your first order. Manufactured and shipped from the UK.</p>
+    <a href="#" class="cta-btn">Get Your Free Quote</a>
+  </div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">Brand Brothers</div>
+        <p class="footer-desc">Industrial-grade branded packaging, manufactured in Birmingham and shipped across the United Kingdom. Built to last. Built to brand.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="#">Coffee Cups</a></li>
+          <li><a href="#">Paper Bags</a></li>
+          <li><a href="#">Gift Boxes</a></li>
+          <li><a href="#">Food Containers</a></li>
+          <li><a href="#">Bespoke Projects</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About the Works</a></li>
+          <li><a href="#">Our Process</a></li>
+          <li><a href="#">Sustainability</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">FAQs</a></li>
+          <li><a href="#">Delivery</a></li>
+          <li><a href="#">Terms</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2026 Brand Brothers Ltd. Registered in England &amp; Wales. brandbrothers.co.uk</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const siblings = entry.target.parentElement.querySelectorAll('.reveal');
+        const index = Array.from(siblings).indexOf(entry.target);
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, index * 100);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
